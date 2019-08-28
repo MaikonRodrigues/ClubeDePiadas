@@ -1,4 +1,4 @@
-package com.example.comunidadedepiadas;
+package com.example.clubededepiadas;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -7,13 +7,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
-import com.example.comunidadedepiadas.Adapters.CategoriaAdapter;
-import com.example.comunidadedepiadas.Adapters.CategoriaAdapterMenu;
-import com.example.comunidadedepiadas.Adapters.PiadaAdapter;
-import com.example.comunidadedepiadas.Classes.Categoria;
-import com.example.comunidadedepiadas.Classes.Piada;
+import com.example.clubededepiadas.Adapters.CategoriaAdapter;
+import com.example.clubededepiadas.Adapters.CategoriaAdapterMenu;
+import com.example.clubededepiadas.Adapters.PiadaAdapter;
+import com.example.clubededepiadas.Classes.Categoria;
+import com.example.clubededepiadas.Classes.Piada;
 
-import com.example.comunidadedepiadas.Classes.User;
+import com.example.clubededepiadas.Classes.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.View;
 
@@ -36,11 +36,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 

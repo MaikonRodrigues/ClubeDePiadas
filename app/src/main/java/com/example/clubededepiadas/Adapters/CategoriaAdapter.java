@@ -1,26 +1,18 @@
-package com.example.comunidadedepiadas.Adapters;
+package com.example.clubededepiadas.Adapters;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comunidadedepiadas.Classes.Categoria;
-import com.example.comunidadedepiadas.Classes.Piada;
-import com.example.comunidadedepiadas.MainActivity;
-import com.example.comunidadedepiadas.R;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.example.clubededepiadas.Classes.Categoria;
+import com.example.clubededepiadas.R;
 
 import java.util.List;
 

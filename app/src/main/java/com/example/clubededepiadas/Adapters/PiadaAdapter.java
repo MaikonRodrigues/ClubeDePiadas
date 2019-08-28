@@ -1,13 +1,12 @@
-package com.example.comunidadedepiadas.Adapters;
+package com.example.clubededepiadas.Adapters;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.util.Log;
+import android.os.Build;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,38 +14,45 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.Menu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comunidadedepiadas.Classes.Piada;
-import com.example.comunidadedepiadas.Classes.User;
-import com.example.comunidadedepiadas.MainActivity;
-import com.example.comunidadedepiadas.R;
+import com.example.clubededepiadas.Classes.Piada;
+import com.example.clubededepiadas.Classes.User;
+import com.example.clubededepiadas.MainActivity;
+import com.example.clubededepiadas.R;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.ProgressCallback;
-import com.koushikdutta.ion.Response;
 
-import java.io.File;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder> {
-    List<Piada> listPiadas; Context context;
+    List<Piada> listPiadas; Context context; User user;
     String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.2";
 
     public PiadaAdapter(List<Piada> listPiadas, Context context) {
         this.listPiadas = listPiadas;
         this.context = context;
+
+        user = new User();
+        // verificacao do usuario logado
+        SharedPreferences prefs = context.getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
+        // chama a tela inicial
+        user.setId(prefs.getString("id", "0"));
+        user.setNome(prefs.getString("nome", "sem nome"));
+        user.setemail(prefs.getString("email", "sem nome"));
+        user.setAvatar(prefs.getString("avatar", "1566265043.png"));
+
     }
 
     @NonNull
@@ -57,63 +63,60 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
         return new PiadaAdapter.PiadaHolder(vista);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull final PiadaHolder holder, final int position) {
         holder.descricao.setText(listPiadas.get(position).getDescriscao());
         getUser(holder.nomeUser, holder.txtDataPost, listPiadas.get(position).getUser_id(), holder.imgUser);
 
-        holder.btnMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(context, holder.btnMenu);
-                popup.inflate(R.menu.menu_piada);
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_editar:
+        //  Verificando se a piada e do user logado
+        if (user.getId().equals(listPiadas.get(position).getId())){
+            holder.btnMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(context, holder.btnMenu);
+                    popup.inflate(R.menu.menu_piada);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.action_editar:
 
-                                final Dialog dialog = new Dialog(context);
-                                dialog.setContentView(R.layout.item_insert);
-                                EditText editDesc;
-                                editDesc = (EditText) dialog.findViewById(R.id.editDescricao);
-                                // Chamada de funcao para editar piada
-                                editPiada(editDesc, listPiadas.get(position).getId() );
-                                Button btn = (Button) dialog.findViewById(R.id.btnAdicionar);
-                                btn.setText("Atualisar");
-                                dialog.findViewById(R.id.btnAdicionar).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        updatePiada(((EditText) dialog.findViewById(R.id.editDescricao)).getText().toString(), listPiadas.get(position).getId());
-                                    }
-                                });
-                                dialog.show();
-                                break;
+                                    final Dialog dialog = new Dialog(context);
+                                    dialog.setContentView(R.layout.item_insert);
+                                    EditText editDesc;
+                                    editDesc = (EditText) dialog.findViewById(R.id.editDescricao);
+                                    // Chamada de funcao para editar piada
+                                    editPiada(editDesc, listPiadas.get(position).getId() );
+                                    Button btn = (Button) dialog.findViewById(R.id.btnAdicionar);
+                                    btn.setText("Atualisar");
+                                    dialog.findViewById(R.id.btnAdicionar).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            updatePiada(((EditText) dialog.findViewById(R.id.editDescricao)).getText().toString(), listPiadas.get(position).getId());
+                                        }
+                                    });
+                                    dialog.show();
+                                    break;
 
-                            case R.id.action_deletar:
+                                case R.id.action_deletar:
 
-                                deletePiada(listPiadas.get(position).getId());
-                                break;
+                                    deletePiada(listPiadas.get(position).getId());
+                                    break;
+                            }
+                            return false;
                         }
-                        return false;
-                    }
-                });
-                popup.show();
-            }
-        });
+                    });
+                    popup.show();
+                }
+            });
 
-        holder.imgLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        }else{
+            holder.btnMenu.setBackgroundResource(R.drawable.ic_action_heart);
+        }
 
-            }
-        });
-        holder.imgDslike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
+
 
     }
 
@@ -239,14 +242,12 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
     public class PiadaHolder extends RecyclerView.ViewHolder {
         TextView descricao, nomeUser, txtDataPost, qtdLike, qtDeslike;
-        ImageView imgLike, imgDslike;   Button btnMenu;
+        Button btnMenu;
         CircleImageView imgUser;
         public PiadaHolder(@NonNull View itemView) {
             super(itemView);
-            descricao = itemView.findViewById(R.id.text_descricao);     nomeUser = itemView.findViewById(R.id.text_nomeUser);
-            txtDataPost = itemView.findViewById(R.id.text_dataPost);    qtDeslike = itemView.findViewById(R.id.txtQuantLike);
-            qtdLike = itemView.findViewById(R.id.txtQuantDslike);       imgLike = itemView.findViewById(R.id.imgLike);
-            imgDslike = itemView.findViewById(R.id.imgDslike);          imgUser = itemView.findViewById(R.id.fotoUser);
+            descricao = itemView.findViewById(R.id.text_descricao);     nomeUser = itemView.findViewById(R.id.text_nomeUser);            txtDataPost = itemView.findViewById(R.id.text_dataPost);
+            imgUser = itemView.findViewById(R.id.fotoUser);
             btnMenu = (Button) itemView.findViewById(R.id.btnMenu);
         }
     }

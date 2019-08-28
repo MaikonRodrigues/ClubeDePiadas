@@ -17,5 +17,4 @@
         android:textColor="@color/branco"
         android:text="Geral" />
 
-
 </LinearLayout>

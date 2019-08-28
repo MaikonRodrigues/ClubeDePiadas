@@ -1,4 +1,4 @@
-package com.example.comunidadedepiadas.Adapters;
+package com.example.clubededepiadas.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comunidadedepiadas.Classes.Categoria;
-import com.example.comunidadedepiadas.MainActivity;
-import com.example.comunidadedepiadas.R;
+import com.example.clubededepiadas.Classes.Categoria;
+import com.example.clubededepiadas.MainActivity;
+import com.example.clubededepiadas.R;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.comunidadedepiadas;
+package com.example.clubededepiadas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.comunidadedepiadas.Classes.User;
+import com.example.clubededepiadas.Classes.User;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;

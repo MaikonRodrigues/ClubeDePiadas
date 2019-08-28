@@ -1,4 +1,4 @@
-package com.example.comunidadedepiadas.Classes;
+package com.example.clubededepiadas.Classes;
 
 public class Piada {
     String descriscao,  user_id, categoria_id;

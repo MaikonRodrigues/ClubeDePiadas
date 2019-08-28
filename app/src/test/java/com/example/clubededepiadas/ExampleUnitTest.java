@@ -1,4 +1,4 @@
-package com.example.comunidadedepiadas;
+package com.example.clubededepiadas;
 
 import org.junit.Test;
 
