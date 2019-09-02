@@ -38,7 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder> {
     List<Piada> listPiadas; Context context; User user;
-    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.2";
+    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.56.1";
 
     public PiadaAdapter(List<Piada> listPiadas, Context context) {
         this.listPiadas = listPiadas;
@@ -70,10 +70,11 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
         getUser(holder.nomeUser, holder.txtDataPost, listPiadas.get(position).getUser_id(), holder.imgUser);
 
         //  Verificando se a piada e do user logado
-        if (user.getId().equals(listPiadas.get(position).getId())){
+        if (user.getId().equals(listPiadas.get(position).getUser_id())){
             holder.btnMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     PopupMenu popup = new PopupMenu(context, holder.btnMenu);
                     popup.inflate(R.menu.menu_piada);
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -113,11 +114,34 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         }else{
             holder.btnMenu.setBackgroundResource(R.drawable.ic_action_heart);
+
         }
 
 
 
 
+    }
+
+    private void getLike(final TextView qtdLike, User user, Piada piada) {
+        Ion.with(context)
+                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
+                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/like/"+user.getId()+"/"+piada.getId())
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+
+                        try{
+                            for(int i = 0; i < result.size(); i++) {
+                                JsonObject jsonObject = result.get(i).getAsJsonObject();
+                                qtdLike.setText(jsonObject.get("curtidas").getAsString());
+
+                            }
+                        }catch (Exception erro){
+                            Toast.makeText(context, "Erro na Requisição", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     private  void getUser(final TextView nomeUser, final TextView dataPost, final String id, final ImageView imageView) {
@@ -241,13 +265,13 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     }
 
     public class PiadaHolder extends RecyclerView.ViewHolder {
-        TextView descricao, nomeUser, txtDataPost, qtdLike, qtDeslike;
+        TextView descricao, nomeUser, txtDataPost, qtdLike;
         Button btnMenu;
         CircleImageView imgUser;
         public PiadaHolder(@NonNull View itemView) {
             super(itemView);
             descricao = itemView.findViewById(R.id.text_descricao);     nomeUser = itemView.findViewById(R.id.text_nomeUser);            txtDataPost = itemView.findViewById(R.id.text_dataPost);
-            imgUser = itemView.findViewById(R.id.fotoUser);
+            imgUser = itemView.findViewById(R.id.fotoUser);             qtdLike = itemView.findViewById(R.id.txtLike);
             btnMenu = (Button) itemView.findViewById(R.id.btnMenu);
         }
     }

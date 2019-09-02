@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     private static final int COD_SELECIONA = 10;
     List<Piada> listPiada;      PiadaAdapter piadaAdapter;  User user;      List<Categoria> listCat, listCatMenu;
     ProgressDialog progresso;   EditText editDesc;          boolean jaLogou;    Intent intent;      String data;
-    String categoria_a_listar, ip = "192.168.1.2";          Categoria categoria, categoriaMenu;
+    String categoria_a_listar, ip = "192.168.56.1";          Categoria categoria, categoriaMenu;
     TextView nav_user, nav_email;                           CircleImageView nav_image;
     CategoriaAdapter categoriaAdapter;                      CategoriaAdapterMenu  categoriaAdapterMenu;
 
@@ -156,7 +156,9 @@ public class MainActivity extends AppCompatActivity
         nav_email.setText(user.getemail());
         getImage(user, nav_image);
 
-        nav_image.setOnClickListener(new View.OnClickListener() {
+       /*   Tentativa de busca de imagem na galeria
+
+       nav_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -164,7 +166,7 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult(galleryIntent, COD_SELECIONA);
                 addImage(galleryIntent);
             }
-        });
+        });*/
 
 
         listPiada = new ArrayList<>();        myrecycleView = findViewById(R.id.mRecyclerView);
@@ -329,7 +331,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void getImage(User user, final ImageView imageView){
+    public void getImage(User user, final CircleImageView imageView){
 
         Ion.with(MainActivity.this)
                 .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
@@ -391,6 +393,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            //intent.putExtra("keyName", user.getId());
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
