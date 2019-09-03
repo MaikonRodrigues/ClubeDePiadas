@@ -71,6 +71,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         //  Verificando se a piada e do user logado
         if (user.getId().equals(listPiadas.get(position).getUser_id())){
+            holder.qtdLike.setVisibility(View.INVISIBLE);
             holder.btnMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,31 +115,39 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         }else{
             holder.btnMenu.setBackgroundResource(R.drawable.ic_action_heart);
+            holder.btnMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getLike(holder.qtdLike, user, listPiadas.get(position).getId());
+                }
+            });
+
 
         }
 
-
-
-
     }
 
-    private void getLike(final TextView qtdLike, User user, Piada piada) {
+    private void getLike(final TextView qtdLike, User user, String piada_id) {
+       // Toast.makeText(context, "user_id:" +user.getId(), Toast.LENGTH_LONG).show();
+       // Toast.makeText(context, "piada_id:" +piada_id, Toast.LENGTH_LONG).show();
+
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/like/"+user.getId()+"/"+piada.getId())
+                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/like")
+                .setBodyParameter("user_id", user.getId())
+                .setBodyParameter("piada_id", piada_id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
                     public void onCompleted(Exception e, JsonArray result) {
-
                         try{
                             for(int i = 0; i < result.size(); i++) {
                                 JsonObject jsonObject = result.get(i).getAsJsonObject();
                                 qtdLike.setText(jsonObject.get("curtidas").getAsString());
-
+                                Toast.makeText(context, "curtiu", Toast.LENGTH_LONG).show();
                             }
                         }catch (Exception erro){
-                            Toast.makeText(context, "Erro na Requisição", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
