@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.example.clubededepiadas.Adapters.CategoriaAdapter;
@@ -27,6 +28,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -55,8 +57,8 @@ public class MainActivity extends AppCompatActivity
     private static final int COD_SELECIONA = 10;
     List<Piada> listPiada;      PiadaAdapter piadaAdapter;  User user;      List<Categoria> listCat, listCatMenu;
     ProgressDialog progresso;   EditText editDesc;          boolean jaLogou;    Intent intent;      String data;
-    String categoria_a_listar, ip = "192.168.56.1";          Categoria categoria, categoriaMenu;
-    TextView nav_user, nav_email;                           CircleImageView nav_image;
+    String categoria_a_listar, ip = "192.168.1.5";          Categoria categoria, categoriaMenu;
+    TextView nav_user, nav_email;                           ImageView nav_image;
     CategoriaAdapter categoriaAdapter;                      CategoriaAdapterMenu  categoriaAdapterMenu;
 
 
@@ -150,11 +152,11 @@ public class MainActivity extends AppCompatActivity
         // pegando textveiws do menu lateral
         nav_user = (TextView)hView.findViewById(R.id.nav_nome);
         nav_email = (TextView)hView.findViewById(R.id.nav_email);
-        nav_image = (CircleImageView) hView.findViewById(R.id.nav_image);
+        nav_image = (ImageView) hView.findViewById(R.id.nav_image);
 
         nav_user.setText(user.getNome());
         nav_email.setText(user.getemail());
-        getImage(user, nav_image);
+        getUser(user.getId(),nav_image);
 
        /*   Tentativa de busca de imagem na galeria
 
@@ -331,7 +333,42 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void getImage(User user, final CircleImageView imageView){
+    private  void getUser(  final String id, final ImageView imageView) {
+        Ion.with(MainActivity.this)
+                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
+                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/user/"+id)
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+
+                        try{
+                            for(int i = 0; i < result.size(); i++) {
+                                JsonObject jsonObject = result.get(i).getAsJsonObject();
+                                User user;
+                                user = new User();
+                                user.setId(jsonObject.get("id").getAsString());
+                                user.setNome(jsonObject.get("name").getAsString());
+                                user.setemail(jsonObject.get("email").getAsString());
+                                user.setAvatar(jsonObject.get("avatar").getAsString());
+                                user.setData(jsonObject.get("created_at").getAsString());
+                                if (user.getId().equals(id)) {
+                                    getImage(user, imageView);
+                                }else{
+                                    //  Eventualmente esse erro ocorrera varias vezes
+
+                                }
+                            }
+                        }catch (Exception erro){
+                            Toast.makeText(MainActivity.this, "Erro na Requisição", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+
+    }
+
+    public void getImage(User user, final ImageView imageView){
 
         Ion.with(MainActivity.this)
                 .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
@@ -339,6 +376,7 @@ public class MainActivity extends AppCompatActivity
                 .setCallback(new FutureCallback<Bitmap>() {
                     @Override
                     public void onCompleted(Exception e, Bitmap result)  {
+
                         imageView.setImageBitmap(result);
                     }
                 });
@@ -379,6 +417,10 @@ public class MainActivity extends AppCompatActivity
             editor.commit();
 
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+        if (id == R.id.action_settingsUser) {
+           Intent intent = new Intent(MainActivity.this, SettingsUserActivity.class);
             startActivity(intent);
         }
 

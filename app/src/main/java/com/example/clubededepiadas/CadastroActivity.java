@@ -20,7 +20,7 @@ public class CadastroActivity extends AppCompatActivity {
     EditText email, senha, confSenha, nome;
     Button btnCadastrar;
     User user;
-    String  ip = "192.168.56.1";
+    String  ip = "192.168.1.5";
 
 
     @Override

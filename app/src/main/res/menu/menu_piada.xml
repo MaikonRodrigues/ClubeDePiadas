@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:iconTint="@color/colorPrimaryDark"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_editar"
         android:orderInCategory="100"
         android:title="Editar"
+
         android:icon="@drawable/ic_edit"
         />
     <item

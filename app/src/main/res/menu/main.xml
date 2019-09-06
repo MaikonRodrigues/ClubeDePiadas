@@ -6,4 +6,9 @@
         android:orderInCategory="100"
         android:title="Sair"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settingsUser"
+        android:orderInCategory="100"
+        android:title="Editar Perfil"
+        app:showAsAction="never" />
 </menu>

@@ -38,7 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder> {
     List<Piada> listPiadas; Context context; User user;
-    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.56.1";
+    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.5";
 
     public PiadaAdapter(List<Piada> listPiadas, Context context) {
         this.listPiadas = listPiadas;
@@ -255,16 +255,16 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     }
 
     public void getImage(User user, final ImageView imageView){
-
+       // Toast.makeText(context, "avatar"+user.getAvatar(), Toast.LENGTH_LONG).show();
         Ion.with(context)
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/image/"+user.getAvatar())
+                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
                 .asBitmap()
                 .setCallback(new FutureCallback<Bitmap>() {
                     @Override
                     public void onCompleted(Exception e, Bitmap result)  {
                         imageView.setImageBitmap(result);
                     }
-        });
+                });
     }
 
 
