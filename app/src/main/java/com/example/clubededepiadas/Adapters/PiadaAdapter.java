@@ -1,6 +1,7 @@
 package com.example.clubededepiadas.Adapters;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,17 +20,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.clubededepiadas.Classes.Categoria;
 import com.example.clubededepiadas.Classes.Piada;
 import com.example.clubededepiadas.Classes.User;
 import com.example.clubededepiadas.MainActivity;
 import com.example.clubededepiadas.R;
+import com.example.clubededepiadas.SettingsUserActivity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,11 +43,18 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder> {
     List<Piada> listPiadas; Context context; User user;
-    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.5";
+    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.3";
+    List<Categoria> listCat;
+    RecyclerView myrecycleView, mRecicleCat,  myrecycle;
+    Categoria categoria;
+    Piada piada,  piada1;
+    ProgressDialog progresso;
+    CategoriaAdapter categoriaAdapter;
 
     public PiadaAdapter(List<Piada> listPiadas, Context context) {
         this.listPiadas = listPiadas;
         this.context = context;
+        piada1 = new Piada();
 
         user = new User();
         // verificacao do usuario logado
@@ -86,16 +98,35 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
                                     final Dialog dialog = new Dialog(context);
                                     dialog.setContentView(R.layout.item_insert);
-                                    EditText editDesc;
+                                    EditText editDesc; TextView txtCatNome;
+                                    txtCatNome = (TextView)dialog.findViewById(R.id.txtCategoria_id);
                                     editDesc = (EditText) dialog.findViewById(R.id.editDescricao);
+                                    dialog.findViewById(R.id.btnCategoria_id).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {       // Clik botao categoria
+                                            final Dialog dialogCat = new Dialog(context);
+                                            dialogCat.setContentView(R.layout.item_recycler_categoria);
+
+                                            //Laco para adicionar categorias
+                                            listCat = new ArrayList<>();
+                                            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+                                            myrecycle =(RecyclerView) dialogCat.findViewById(R.id.listCat);
+                                            myrecycle.setLayoutManager(layoutManager);
+
+                                            listarCategorias(dialogCat, dialog);
+                                            dialogCat.show();
+                                        }
+                                    });
                                     // Chamada de funcao para editar piada
-                                    editPiada(editDesc, listPiadas.get(position).getId() );
+                                    editPiada(editDesc, listPiadas.get(position).getId());
+
                                     Button btn = (Button) dialog.findViewById(R.id.btnAdicionar);
                                     btn.setText("Atualisar");
                                     dialog.findViewById(R.id.btnAdicionar).setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            updatePiada(((EditText) dialog.findViewById(R.id.editDescricao)).getText().toString(), listPiadas.get(position).getId());
+                                            piada1.setCategoria_id("1");
+                                            updatePiada(((EditText) dialog.findViewById(R.id.editDescricao)).getText().toString(), listPiadas.get(position).getId(), piada1);
                                         }
                                     });
                                     dialog.show();
@@ -124,6 +155,36 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
 
         }
+
+    }
+
+    private  void listarCategorias(final Dialog dialogCat,final Dialog dialog) {
+
+        Ion.with(context)
+                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
+                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/categorias")
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        try{
+                            for(int i = 0; i < result.size(); i++){
+                                JsonObject jsonObject = result.get(i).getAsJsonObject();
+                                categoria = new Categoria();
+                                categoria.setId(jsonObject.get("id").getAsString());
+                                categoria.setNome(jsonObject.get("nome").getAsString());
+                                listCat.add(categoria);
+                            }
+                            categoriaAdapter = new CategoriaAdapter(listCat, dialogCat, dialog, context);
+                            piada1.setCategoria_id(categoriaAdapter.getCategoria_id());
+                            myrecycle.setAdapter(categoriaAdapter);
+
+                        }catch (Exception erro){
+                            progresso.hide();
+                            Toast.makeText(context, "Erro no listar", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
     }
 
@@ -211,11 +272,12 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                 });
     }
 
-    public void updatePiada(String descricao, String id){
+    public void updatePiada(String descricao,  String id, Piada piada1){
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
                 .load("PUT", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas/"+id)
                 .setBodyParameter("descricao_app", descricao)
+                .setBodyParameter("categoria_app", ""+piada1.getCategoria_id())
                 .asString()
                 .setCallback(new FutureCallback<String>() {
                     @Override

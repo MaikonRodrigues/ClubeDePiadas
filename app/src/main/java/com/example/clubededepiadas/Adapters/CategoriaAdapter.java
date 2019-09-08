@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.CategoriaHolder> {
     List<Categoria> listCategorias; Context context;
-    String  ip = "192.168.1.5", categoria_id;
+    String  ip = "192.168.1.3", categoria_id;
     Categoria categoria = new Categoria("geral");
     Dialog dialogCat, dialog;
 
@@ -28,6 +28,7 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
         this.context = context;
         this.dialogCat = dialogCat;
         this.dialog = dialog;
+        //setCategoria_id("1");
     }
 
     @NonNull
@@ -47,6 +48,8 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
             public void onClick(View v) {
                 categoria.setId(listCategorias.get(position).getId());
                 categoria.setNome(listCategorias.get(position).getNome());
+
+                // categoria id so e setado quando clica no item da lista ,isso gera erro no edit.. tratar inicializando categoria id = 1
                 setCategoria_id(categoria.getId());
                 TextView  tx = (TextView) dialog.findViewById(R.id.txtCategoria_id);
                 tx.setText(categoria.getNome());

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     private static final int COD_SELECIONA = 10;
     List<Piada> listPiada;      PiadaAdapter piadaAdapter;  User user;      List<Categoria> listCat, listCatMenu;
     ProgressDialog progresso;   EditText editDesc;          boolean jaLogou;    Intent intent;      String data;
-    String categoria_a_listar, ip = "192.168.1.5";          Categoria categoria, categoriaMenu;
+    String categoria_a_listar, ip = "192.168.1.3";          Categoria categoria, categoriaMenu;
     TextView nav_user, nav_email;                           ImageView nav_image;
     CategoriaAdapter categoriaAdapter;                      CategoriaAdapterMenu  categoriaAdapterMenu;
 
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity
                 final Dialog dialog = new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.item_insert);
                 editDesc = (EditText) dialog.findViewById(R.id.editDescricao);
+
                 dialog.findViewById(R.id.btnCategoria_id).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,19 +159,6 @@ public class MainActivity extends AppCompatActivity
         nav_email.setText(user.getemail());
         getUser(user.getId(),nav_image);
 
-       /*   Tentativa de busca de imagem na galeria
-
-       nav_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, COD_SELECIONA);
-                addImage(galleryIntent);
-            }
-        });*/
-
-
         listPiada = new ArrayList<>();        myrecycleView = findViewById(R.id.mRecyclerView);
         myrecycleView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
@@ -178,25 +166,6 @@ public class MainActivity extends AppCompatActivity
         mRecicleCat.setLayoutManager(new LinearLayoutManager(MainActivity.this ,LinearLayoutManager.HORIZONTAL, false));
         listarCategoriasMenu();
 
-    }
-    public void addImage(Intent galleryIntent){
-        final File fileToUpload = new File(String.valueOf(galleryIntent));
-        Ion.with(MainActivity.this)
-                .load("POST", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/image/"+galleryIntent)
-                .setMultipartFile("upload", "image/jpeg", fileToUpload)
-                .asJsonObject()
-                // run a callback on completion
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-
-                        if (e != null) {
-                            Toast.makeText(MainActivity.this, "Error uploading file", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        Toast.makeText(MainActivity.this, "File upload complete", Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 
     private  void listarCategorias(final Dialog dialogCat,final Dialog dialog) {
@@ -266,7 +235,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void createPiada(String descricao, Piada piada){
-        Toast.makeText(MainActivity.this, "id da categoria: "+piada.getCategoria_id(), Toast.LENGTH_LONG).show();
+       // Toast.makeText(MainActivity.this, "id da categoria: "+piada.getCategoria_id(), Toast.LENGTH_LONG).show();
 
         Ion.with(MainActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
