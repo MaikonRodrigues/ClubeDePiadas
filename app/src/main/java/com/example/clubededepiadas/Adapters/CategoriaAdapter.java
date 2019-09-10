@@ -23,12 +23,12 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
     Dialog dialogCat, dialog;
 
 
-    public CategoriaAdapter(List<Categoria> listCategorias, Dialog dialogCat,  Dialog dialog,  Context context) {
+    public CategoriaAdapter(List<Categoria> listCategorias, Dialog dialogCat,  Dialog dialog,   Context context) {
         this.listCategorias = listCategorias;
         this.context = context;
         this.dialogCat = dialogCat;
         this.dialog = dialog;
-        //setCategoria_id("1");
+
     }
 
     @NonNull

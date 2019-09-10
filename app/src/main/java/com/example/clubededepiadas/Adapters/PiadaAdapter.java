@@ -46,7 +46,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.3";
     List<Categoria> listCat;
     RecyclerView myrecycleView, mRecicleCat,  myrecycle;
-    Categoria categoria;
+    Categoria categoria, categoriaEdit;
     Piada piada,  piada1;
     ProgressDialog progresso;
     CategoriaAdapter categoriaAdapter;
@@ -81,13 +81,30 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
         holder.descricao.setText(listPiadas.get(position).getDescriscao());
         getUser(holder.nomeUser, holder.txtDataPost, listPiadas.get(position).getUser_id(), holder.imgUser);
 
+        holder.btnShere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compartilharPiada(listPiadas.get(position).getDescriscao());
+            }
+        });
+        holder.btnDlike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDesLike(holder.qtdDslike, user, listPiadas.get(position).getId());
+            }
+        });
+
         //  Verificando se a piada e do user logado
         if (user.getId().equals(listPiadas.get(position).getUser_id())){
+
             holder.qtdLike.setVisibility(View.INVISIBLE);
+            holder.btnDlike.setVisibility(View.INVISIBLE);
+            holder.qtdDslike.setVisibility(View.INVISIBLE);
+            holder.btnShere.setVisibility(View.INVISIBLE);
+
             holder.btnMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     PopupMenu popup = new PopupMenu(context, holder.btnMenu);
                     popup.inflate(R.menu.menu_piada);
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -101,6 +118,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                                     EditText editDesc; TextView txtCatNome;
                                     txtCatNome = (TextView)dialog.findViewById(R.id.txtCategoria_id);
                                     editDesc = (EditText) dialog.findViewById(R.id.editDescricao);
+
                                     dialog.findViewById(R.id.btnCategoria_id).setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {       // Clik botao categoria
@@ -117,15 +135,16 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                                             dialogCat.show();
                                         }
                                     });
-                                    // Chamada de funcao para editar piada
-                                    editPiada(editDesc, listPiadas.get(position).getId());
+
+                                    // Chamada de funcao seta os valores dos campos
+                                    setCamposPiada(editDesc, txtCatNome, listPiadas.get(position).getId());
 
                                     Button btn = (Button) dialog.findViewById(R.id.btnAdicionar);
                                     btn.setText("Atualisar");
                                     dialog.findViewById(R.id.btnAdicionar).setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            piada1.setCategoria_id("1");
+                                            piada1.setCategoria_id(categoriaAdapter.getCategoria_id());
                                             updatePiada(((EditText) dialog.findViewById(R.id.editDescricao)).getText().toString(), listPiadas.get(position).getId(), piada1);
                                         }
                                     });
@@ -145,16 +164,45 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
             });
 
         }else{
-            holder.btnMenu.setBackgroundResource(R.drawable.ic_action_heart);
+            holder.btnMenu.setBackgroundResource(R.drawable.ic_like);
+            getLike(holder.qtdLike, listPiadas.get(position).getId());
+            getDesLike(holder.qtdDslike, listPiadas.get(position).getId());
             holder.btnMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getLike(holder.qtdLike, user, listPiadas.get(position).getId());
+                    setLike(holder.qtdLike, user, listPiadas.get(position).getId());
                 }
             });
-
-
         }
+
+    }
+    private  void getCategorias(final String id, final TextView categoriaId ) {
+
+        Ion.with(context)
+                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
+                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/categorias")
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        try{
+                            for(int i = 0; i < result.size(); i++){
+                                JsonObject jsonObject = result.get(i).getAsJsonObject();
+                                categoriaEdit = new Categoria();
+                                categoriaEdit.setId(jsonObject.get("id").getAsString());
+                                categoriaEdit.setNome(jsonObject.get("nome").getAsString());
+                                if (categoria.getId().equals(id)){
+                                    categoriaId.setText(categoriaEdit.getNome());
+                                    piada1.setCategoria_id(categoriaEdit.getId());
+                                }
+                            }
+
+                        }catch (Exception erro){
+
+                            Toast.makeText(context, "Erro no listar", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
     }
 
@@ -188,7 +236,33 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
     }
 
-    private void getLike(final TextView qtdLike, User user, String piada_id) {
+    private void setDesLike(final TextView qtdDslike, User user, String piada_id) {
+        // Toast.makeText(context, "user_id:" +user.getId(), Toast.LENGTH_LONG).show();
+        // Toast.makeText(context, "piada_id:" +piada_id, Toast.LENGTH_LONG).show();
+
+        Ion.with(context)
+                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
+                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/deslike")
+                .setBodyParameter("user_id", user.getId())
+                .setBodyParameter("piada_id", piada_id)
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        try{
+                            for(int i = 0; i < result.size(); i++) {
+                                JsonObject jsonObject = result.get(i).getAsJsonObject();
+                                 qtdDslike.setText(jsonObject.get("deslikes").getAsString());
+                                //Toast.makeText(context, "curtiu", Toast.LENGTH_LONG).show();
+                            }
+                        }catch (Exception erro){
+                            Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    private void setLike(final TextView qtdLike, User user, String piada_id) {
        // Toast.makeText(context, "user_id:" +user.getId(), Toast.LENGTH_LONG).show();
        // Toast.makeText(context, "piada_id:" +piada_id, Toast.LENGTH_LONG).show();
 
@@ -205,10 +279,54 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                             for(int i = 0; i < result.size(); i++) {
                                 JsonObject jsonObject = result.get(i).getAsJsonObject();
                                 qtdLike.setText(jsonObject.get("curtidas").getAsString());
-                                Toast.makeText(context, "curtiu", Toast.LENGTH_LONG).show();
+                               // Toast.makeText(context, "curtiu", Toast.LENGTH_LONG).show();
                             }
                         }catch (Exception erro){
                             Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    public void getLike(final TextView qtdLike,  String piada_id){
+        Ion.with(context)
+                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
+                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getLike")
+                .setBodyParameter("piada_id", piada_id)
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        try{
+                            for(int i = 0; i < result.size(); i++) {
+                                JsonObject jsonObject = result.get(i).getAsJsonObject();
+                                qtdLike.setText(jsonObject.get("curtidas").getAsString());
+                            }
+
+                        }catch (Exception erro){
+                           // Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    public void getDesLike(final TextView qtdDesLike,  String piada_id){
+        Ion.with(context)
+                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
+                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getLike")
+                .setBodyParameter("piada_id", piada_id)
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+                        try{
+                            for(int i = 0; i < result.size(); i++) {
+                                JsonObject jsonObject = result.get(i).getAsJsonObject();
+                                qtdDesLike.setText(jsonObject.get("deslikes").getAsString());
+                            }
+
+                        }catch (Exception erro){
+                            // Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -243,7 +361,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                                  }
                             }
                         }catch (Exception erro){
-                            Toast.makeText(context, "Erro na Requisição", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(context, "Erro na Requisição", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -254,7 +372,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     public void deletePiada(String id)  {
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
-                .load("DELETE", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas/deletePiada/"+id)
+                .load("DELETE", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/deletePiada/"+id)
                 .asString()
                 .setCallback(new FutureCallback<String>() {
                     @Override
@@ -295,7 +413,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                 });
     }
 
-    public void editPiada(final EditText editDesc, String id){
+    public void setCamposPiada(final EditText editDesc, final TextView categoriaId, String id){
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
                 .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas/"+id)
@@ -307,7 +425,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                             String descricao = result.get("descricao").getAsString();
                             EditText desc = editDesc;
                             desc.setText(descricao);
-                            Toast.makeText(context, descricao, Toast.LENGTH_LONG).show();
+                            getCategorias(result.get("categoria_id").getAsString(), categoriaId);
 
                         }catch (Exception erro){
                             Toast.makeText(context, "Erro na requisição", Toast.LENGTH_LONG).show();
@@ -329,21 +447,28 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                 });
     }
 
-
     @Override
     public int getItemCount() {
         return listPiadas.size();
     }
 
     public class PiadaHolder extends RecyclerView.ViewHolder {
-        TextView descricao, nomeUser, txtDataPost, qtdLike;
-        Button btnMenu;
+        TextView descricao, nomeUser, txtDataPost, qtdLike, qtdDslike;
+        Button btnMenu, btnDlike, btnShere;
         CircleImageView imgUser;
         public PiadaHolder(@NonNull View itemView) {
             super(itemView);
             descricao = itemView.findViewById(R.id.text_descricao);     nomeUser = itemView.findViewById(R.id.text_nomeUser);            txtDataPost = itemView.findViewById(R.id.text_dataPost);
-            imgUser = itemView.findViewById(R.id.fotoUser);             qtdLike = itemView.findViewById(R.id.txtLike);
-            btnMenu = (Button) itemView.findViewById(R.id.btnMenu);
+            imgUser = itemView.findViewById(R.id.fotoUser);             qtdLike = itemView.findViewById(R.id.txtLike);                   btnDlike = itemView.findViewById(R.id.btnDeslike);
+            btnMenu = (Button) itemView.findViewById(R.id.btnMenu);     btnShere = itemView.findViewById(R.id.btnShare);                 qtdDslike = itemView.findViewById(R.id.txtDsLike);
         }
+    }
+
+    public void compartilharPiada(String texto){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, texto);
+        sendIntent.setType("text/plain");
+        context.startActivity(sendIntent);
     }
 }

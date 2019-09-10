@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     private static final int COD_SELECIONA = 10;
     List<Piada> listPiada;      PiadaAdapter piadaAdapter;  User user;      List<Categoria> listCat, listCatMenu;
     ProgressDialog progresso;   EditText editDesc;          boolean jaLogou;    Intent intent;      String data;
-    String categoria_a_listar, ip = "192.168.1.3";          Categoria categoria, categoriaMenu;
+    String categoria_a_listar, ip = "192.168.1.3";          Categoria categoria, categoriaMenu;     int flagGetCat = 0;
     TextView nav_user, nav_email;                           ImageView nav_image;
     CategoriaAdapter categoriaAdapter;                      CategoriaAdapterMenu  categoriaAdapterMenu;
 
@@ -113,6 +113,8 @@ public class MainActivity extends AppCompatActivity
                         final Dialog dialogCat = new Dialog(MainActivity.this);
                         dialogCat.setContentView(R.layout.item_recycler_categoria);
 
+                        flagGetCat = 1;
+
                         //Laco para adicionar categorias
 
                         listCat = new ArrayList<>();
@@ -128,7 +130,11 @@ public class MainActivity extends AppCompatActivity
                 dialog.findViewById(R.id.btnAdicionar).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        piada1.setCategoria_id(categoriaAdapter.getCategoria_id());
+                        if (flagGetCat == 1) {
+                            piada1.setCategoria_id(categoriaAdapter.getCategoria_id());
+                        }else{
+                            piada1.setCategoria_id("1");
+                        }
                         createPiada(editDesc.getText().toString(), piada1);
                     }
                 });
@@ -166,6 +172,7 @@ public class MainActivity extends AppCompatActivity
         mRecicleCat.setLayoutManager(new LinearLayoutManager(MainActivity.this ,LinearLayoutManager.HORIZONTAL, false));
         listarCategoriasMenu();
 
+
     }
 
     private  void listarCategorias(final Dialog dialogCat,final Dialog dialog) {
@@ -192,7 +199,7 @@ public class MainActivity extends AppCompatActivity
 
                         }catch (Exception erro){
                             progresso.hide();
-                            Toast.makeText(MainActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(MainActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -227,7 +234,7 @@ public class MainActivity extends AppCompatActivity
 
                         }catch (Exception erro){
                             progresso.hide();
-                            Toast.makeText(MainActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(MainActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -254,7 +261,7 @@ public class MainActivity extends AppCompatActivity
                                 startActivity(intent);
                             }
                         }catch (Exception erro){
-                            Toast.makeText(MainActivity.this, "Erro ao adicionar Piada", Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(MainActivity.this, "Erro ao adicionar Piada", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -295,7 +302,7 @@ public class MainActivity extends AppCompatActivity
 
                         }catch (Exception erro){
                             progresso.hide();
-                            Toast.makeText(MainActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(MainActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -329,7 +336,7 @@ public class MainActivity extends AppCompatActivity
                                 }
                             }
                         }catch (Exception erro){
-                            Toast.makeText(MainActivity.this, "Erro na Requisição", Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(MainActivity.this, "Erro na Requisição", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -358,6 +365,8 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            Intent it = new Intent(this, MainActivity.class);
+            startActivity(it);
         }
     }
 
@@ -403,24 +412,59 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Intent intent = new Intent(MainActivity.this, MainActivity.class);
-            //intent.putExtra("keyName", user.getId());
+            Intent intent = new Intent(MainActivity.this, SettingsUserActivity.class);
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
 
+            Ion.with(MainActivity.this)
+                    //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
+                    .load("POST", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getLink")
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result) {
+                            try {
+                                if (result.equals("ok")) {
+                                    Toast.makeText(MainActivity.this, "Deletado com sucesso", Toast.LENGTH_LONG).show();
+                                }else{
+                                    setLink(result);
+                                }
+                            } catch (Exception erro) {
+                                Toast.makeText(MainActivity.this, "link = "+result, Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    });
+
+
+
+        } else if (id == R.id.nav_send) {
+            SharedPreferences prefs = getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("estaLogado", false);
+            editor.putString("id",null);
+            editor.putString("nome",null);
+            editor.putString("email",null);
+            editor.commit();
+
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void setLink(String texto){
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, texto);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 }

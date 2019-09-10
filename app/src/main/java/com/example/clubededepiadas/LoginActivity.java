@@ -19,7 +19,7 @@ import com.koushikdutta.ion.Ion;
 public class LoginActivity extends AppCompatActivity {
 
     EditText email, senha;  Button btnLogar;    User user;  TextView naoTconta;
-    String  ip = "192.168.1.5";
+    String  ip = "192.168.1.3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

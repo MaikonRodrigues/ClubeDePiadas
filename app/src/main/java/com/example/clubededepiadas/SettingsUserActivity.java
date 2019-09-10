@@ -119,7 +119,6 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
 
         getUser(user.getId(), user_image);
 
-
         btnAddFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,7 +181,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
                                         startActivity(intent);
                                     }
                                 }catch (Exception erro){
-                                    Toast.makeText(SettingsUserActivity.this, "Erro ao atualizar nome", Toast.LENGTH_LONG).show();
+                                   // Toast.makeText(SettingsUserActivity.this, "Erro ao atualizar nome", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -265,9 +264,6 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
         return imagemString;
     }
 
-    /*
-    ----------------------------------------------------------------------------------------------------------
-     */
     @Override
     public void onErrorResponse(VolleyError error) {
 
@@ -277,9 +273,6 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
     public void onResponse(JSONObject response) {
 
     }
-    /*
-    ----------------------------------------------------------------------------------------------------------
-     */
 
     public  void listarPiadas(final String categoria_A_listar) {
         progresso = new ProgressDialog(SettingsUserActivity.this);
@@ -316,7 +309,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
 
                         }catch (Exception erro){
                             progresso.hide();
-                            Toast.makeText(SettingsUserActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(SettingsUserActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -350,7 +343,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
                                 }
                             }
                         }catch (Exception erro){
-                            Toast.makeText(SettingsUserActivity.this, "Erro na Requisição", Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(SettingsUserActivity.this, "Erro na Requisição", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
