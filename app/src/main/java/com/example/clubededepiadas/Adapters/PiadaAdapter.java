@@ -43,7 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder> {
     List<Piada> listPiadas; Context context; User user;
-    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.3";
+    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.5";
     List<Categoria> listCat;
     RecyclerView myrecycleView, mRecicleCat,  myrecycle;
     Categoria categoria, categoriaEdit;
@@ -176,6 +176,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
         }
 
     }
+
     private  void getCategorias(final String id, final TextView categoriaId ) {
 
         Ion.with(context)

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.CategoriaHolder> {
     List<Categoria> listCategorias; Context context;
-    String  ip = "192.168.1.3", categoria_id;
+    String  ip = "192.168.1.5", categoria_id;
     Categoria categoria = new Categoria("geral");
     Dialog dialogCat, dialog;
 

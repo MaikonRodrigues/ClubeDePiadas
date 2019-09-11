@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     private static final int COD_SELECIONA = 10;
     List<Piada> listPiada;      PiadaAdapter piadaAdapter;  User user;      List<Categoria> listCat, listCatMenu;
     ProgressDialog progresso;   EditText editDesc;          boolean jaLogou;    Intent intent;      String data;
-    String categoria_a_listar, ip = "192.168.1.3";          Categoria categoria, categoriaMenu;     int flagGetCat = 0;
+    String categoria_a_listar, ip = "192.168.1.5";          Categoria categoria, categoriaMenu;     int flagGetCat = 0;
     TextView nav_user, nav_email;                           ImageView nav_image;
     CategoriaAdapter categoriaAdapter;                      CategoriaAdapterMenu  categoriaAdapterMenu;
 
@@ -70,17 +70,18 @@ public class MainActivity extends AppCompatActivity
         // Pegando valor do menu selecionado e selecionando tipo para listar
         intent = getIntent();
         data = intent.getStringExtra("keyName");
-        if(data != null){
-            listarPiadas(data);
-        }else{
-            listarPiadas("1");
-        }
 
         user = new User();  piada1 = new Piada();
         // verificacao do usuario logado
         SharedPreferences prefs = getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
         jaLogou = prefs.getBoolean("estaLogado", false);
         categoria_a_listar = "1";
+
+        if(data != null){
+            listarPiadas(data);
+        }else{
+            listarPiadas("1");
+        }
 
         if(jaLogou) {
             // chama a tela inicial
@@ -416,7 +417,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            Intent intent = new Intent(MainActivity.this, ListarUserActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
 

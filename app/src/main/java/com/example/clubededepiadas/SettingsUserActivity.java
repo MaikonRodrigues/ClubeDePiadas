@@ -61,7 +61,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
     Piada piada, piada1;                                        RecyclerView myrecycleView;
     List<Piada> listPiada;                                      PiadaAdapter piadaAdapter;  User user;
     ProgressDialog progresso;             boolean jaLogou;      Intent intent;      String data;
-    String categoria_a_listar, ip = "192.168.1.3";               Button btnAddFoto, btnUpdateName, btnUpdateEmail;
+    String categoria_a_listar, ip = "192.168.1.5";               Button btnAddFoto, btnUpdateName, btnUpdateEmail;
     TextView name_user, name_email;                             CircleImageView user_image;
     private static final int COD_SELECIONA = 10;                Bitmap bitmap;
 
