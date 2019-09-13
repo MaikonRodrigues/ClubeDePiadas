@@ -30,7 +30,7 @@ import java.util.List;
 
 public class ListarUserActivity extends AppCompatActivity {
 
-    String  ip = "192.168.1.5";                          Boolean jaLogou;
+    String  ip ;                          Boolean jaLogou;
     RecyclerView recyclerView;                           ProgressDialog progresso;
     EditText textPesquisa;                               User user;
     List<User> userList, userListFilter;
@@ -40,7 +40,7 @@ public class ListarUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_user);
-
+        ip =  getString(R.string.ip);
         user = new User();
         // verificacao do usuario logado
         SharedPreferences prefs = getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
@@ -103,10 +103,10 @@ public class ListarUserActivity extends AppCompatActivity {
                     listUserAdapter = new ListUserAdapter(userListFilter,ListarUserActivity.this);
                     recyclerView.setAdapter(listUserAdapter);
                 }else{
-                    Toast.makeText(ListarUserActivity.this, "erro no if 2", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(ListarUserActivity.this, "erro no if 2", Toast.LENGTH_LONG).show();
                 }
             }else{
-                Toast.makeText(ListarUserActivity.this, "erro no if 1", Toast.LENGTH_LONG).show();
+               // Toast.makeText(ListarUserActivity.this, "erro no if 1", Toast.LENGTH_LONG).show();
             }
         }
     }

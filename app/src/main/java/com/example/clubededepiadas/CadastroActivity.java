@@ -20,14 +20,14 @@ public class CadastroActivity extends AppCompatActivity {
     EditText email, senha, confSenha, nome;
     Button btnCadastrar;
     User user;
-    String  ip = "192.168.1.5";
+    String  ip;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-
+        ip =  getString(R.string.ip);
         user = new User();
         nome = (EditText) findViewById(R.id.nome_cadastro);
         email = (EditText) findViewById(R.id.email_cadastro);

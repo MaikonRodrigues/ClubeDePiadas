@@ -43,7 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder> {
     List<Piada> listPiadas; Context context; User user;
-    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.5";
+    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip;
     List<Categoria> listCat;
     RecyclerView myrecycleView, mRecicleCat,  myrecycle;
     Categoria categoria, categoriaEdit;
@@ -55,6 +55,8 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
         this.listPiadas = listPiadas;
         this.context = context;
         piada1 = new Piada();
+
+        ip =  context.getString(R.string.ip);
 
         user = new User();
         // verificacao do usuario logado

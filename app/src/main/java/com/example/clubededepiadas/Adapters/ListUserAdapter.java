@@ -1,6 +1,7 @@
 package com.example.clubededepiadas.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -16,7 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.clubededepiadas.Classes.User;
 import com.example.clubededepiadas.ListarUserActivity;
+import com.example.clubededepiadas.MainActivity;
 import com.example.clubededepiadas.R;
+import com.example.clubededepiadas.SettingsUserActivity;
+import com.example.clubededepiadas.ShowUsersActivity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -30,12 +34,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.PiadaHolder> {
     List<User> listUser; Context context; User user;
-    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip = "192.168.1.5";
+    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip ;
 
     public ListUserAdapter(List<User> listUser, Context context) {
         this.listUser = listUser;
         this.context = context;
 
+        ip =  context.getString(R.string.ip);
         user = new User();
         // verificacao do usuario logado
         SharedPreferences prefs = context.getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
@@ -62,7 +67,8 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.PiadaH
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, ShowUsersActivity.class).putExtra("id", listUser.get(position).getId());
+                context.startActivity(intent);
             }
         });
     }

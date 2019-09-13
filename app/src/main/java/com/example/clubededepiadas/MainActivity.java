@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     private static final int COD_SELECIONA = 10;
     List<Piada> listPiada;      PiadaAdapter piadaAdapter;  User user;      List<Categoria> listCat, listCatMenu;
     ProgressDialog progresso;   EditText editDesc;          boolean jaLogou;    Intent intent;      String data;
-    String categoria_a_listar, ip = "192.168.1.5";          Categoria categoria, categoriaMenu;     int flagGetCat = 0;
+    String categoria_a_listar, ip;          Categoria categoria, categoriaMenu;     int flagGetCat = 0;
     TextView nav_user, nav_email;                           ImageView nav_image;
     CategoriaAdapter categoriaAdapter;                      CategoriaAdapterMenu  categoriaAdapterMenu;
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         // Pegando valor do menu selecionado e selecionando tipo para listar
         intent = getIntent();
         data = intent.getStringExtra("keyName");
-
+        ip =  getString(R.string.ip);
         user = new User();  piada1 = new Piada();
         // verificacao do usuario logado
         SharedPreferences prefs = getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
@@ -176,6 +176,47 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public  void listarPiadas(final String categoria_A_listar) {
+        progresso = new ProgressDialog(MainActivity.this);
+        progresso.setMessage("Carregando...");
+        progresso.show();
+
+        Ion.with(MainActivity.this)
+                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
+                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas")
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray result) {
+
+                        try{
+                            for(int i = 0; i < result.size(); i++){
+                                JsonObject  jsonObject = result.get(i).getAsJsonObject();
+                                piada = new Piada();
+                                piada.setId(jsonObject.get("id").getAsString());
+                                piada.setDescriscao(jsonObject.get("descricao").getAsString());
+                                piada.setCategoria_id(jsonObject.get("categoria_id").getAsString());
+                                piada.setUser_id(jsonObject.get("user_id").getAsString());
+                                piada.setLikes(jsonObject.get("curtidas").getAsString());
+                                piada.setDslikes(jsonObject.get("deslikes").getAsString());
+                                if (piada.getCategoria_id().equals(categoria_A_listar)){
+                                    listPiada.add(piada);
+                                }
+
+                            }
+                            progresso.hide();
+                            piadaAdapter = new PiadaAdapter(listPiada, MainActivity.this);
+                            myrecycleView.setAdapter(piadaAdapter);
+
+                        }catch (Exception erro){
+                            progresso.hide();
+                            //  Toast.makeText(MainActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+    }
+
     private  void listarCategorias(final Dialog dialogCat,final Dialog dialog) {
 
         Ion.with(MainActivity.this)
@@ -269,46 +310,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public  void listarPiadas(final String categoria_A_listar) {
-        progresso = new ProgressDialog(MainActivity.this);
-        progresso.setMessage("Carregando...");
-        progresso.show();
 
-        Ion.with(MainActivity.this)
-                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas")
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-
-                        try{
-                            for(int i = 0; i < result.size(); i++){
-                                JsonObject  jsonObject = result.get(i).getAsJsonObject();
-                                piada = new Piada();
-                                piada.setId(jsonObject.get("id").getAsString());
-                                piada.setDescriscao(jsonObject.get("descricao").getAsString());
-                                piada.setCategoria_id(jsonObject.get("categoria_id").getAsString());
-                                piada.setUser_id(jsonObject.get("user_id").getAsString());
-                                piada.setLikes(jsonObject.get("curtidas").getAsString());
-                                piada.setDslikes(jsonObject.get("deslikes").getAsString());
-                                if (piada.getCategoria_id().equals(categoria_A_listar)){
-                                    listPiada.add(piada);
-                                }
-
-                            }
-                            progresso.hide();
-                            piadaAdapter = new PiadaAdapter(listPiada, MainActivity.this);
-                            myrecycleView.setAdapter(piadaAdapter);
-
-                        }catch (Exception erro){
-                            progresso.hide();
-                          //  Toast.makeText(MainActivity.this, "Erro no listar", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-
-    }
 
     private  void getUser(  final String id, final ImageView imageView) {
         Ion.with(MainActivity.this)

@@ -19,13 +19,13 @@ import com.koushikdutta.ion.Ion;
 public class LoginActivity extends AppCompatActivity {
 
     EditText email, senha;  Button btnLogar;    User user;  TextView naoTconta;
-    String  ip = "192.168.1.5";
+    String  ip ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ip =  getString(R.string.ip);
         email = (EditText) findViewById(R.id.email_login);  senha = (EditText) findViewById(R.id.password_login);
         btnLogar = (Button) findViewById(R.id.btnLogar);    naoTconta = (TextView) findViewById(R.id.btnNaotenhoConta);
         user = new User();
