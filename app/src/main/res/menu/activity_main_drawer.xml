@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single"
+        >
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_pessoa"
-            android:iconTint="@color/preto"
             android:title="Meu Perfil" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_pessoas"
-            android:iconTint="@color/preto"
-            android:title="Buscar Usuario" />
+            android:title="Buscar Humorista" />
 
     </group>
 
@@ -21,11 +21,14 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
+                android:iconTint="@color/branco"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/menu_share" />
             <item
                 android:id="@+id/nav_send"
+                android:iconTint="@color/branco"
                 android:icon="@drawable/ic_menu_send"
+
                 android:title="@string/menu_send" />
         </menu>
     </item>

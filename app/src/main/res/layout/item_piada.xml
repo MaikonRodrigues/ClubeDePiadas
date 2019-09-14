@@ -44,22 +44,45 @@
                     android:layout_marginTop="5dp"
                     android:orientation="vertical">
 
-
-                    <TextView
-                        android:id="@+id/text_nomeUser"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="Nome do User"
-                        android:textSize="13dp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_nomeUser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="teste"
+                            android:textSize="13dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnMenuUser"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="5dp"
+                                android:background="@drawable/ic_menu"
+                                android:src="@drawable/ic_menu" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
 
                     <TextView
                         android:id="@+id/text_dataPost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Data do post"
+                        android:text=""
                         android:textSize="11dp" />
 
                     <TextView
@@ -70,8 +93,8 @@
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:text="Descrisção"
-                        android:textColor="@color/cardview_light_background"
+                        android:text=""
+                        android:textColor="@color/preto"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -107,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="10dp"
-                            android:text="0"
+                            android:text=""
                             android:textColor="@color/branco" />
 
                         <Button
@@ -125,12 +148,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="10dp"
-                            android:text="0"
+                            android:text=""
                             android:textColor="@color/branco" />
 
                     </LinearLayout>
 
                 </LinearLayout>
+
+
 
 
 

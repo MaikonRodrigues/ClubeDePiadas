@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity
 
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/categorias")
+                .load("http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/categorias")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override

@@ -103,8 +103,10 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
             holder.btnDlike.setVisibility(View.INVISIBLE);
             holder.qtdDslike.setVisibility(View.INVISIBLE);
             holder.btnShere.setVisibility(View.INVISIBLE);
+            holder.btnMenu.setVisibility(View.INVISIBLE);
 
-            holder.btnMenu.setOnClickListener(new View.OnClickListener() {
+
+            holder.btnMenuUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(context, holder.btnMenu);
@@ -175,6 +177,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                     setLike(holder.qtdLike, user, listPiadas.get(position).getId());
                 }
             });
+            holder.btnMenuUser.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -457,13 +460,14 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
     public class PiadaHolder extends RecyclerView.ViewHolder {
         TextView descricao, nomeUser, txtDataPost, qtdLike, qtdDslike;
-        Button btnMenu, btnDlike, btnShere;
+        Button btnMenu, btnDlike, btnShere,  btnMenuUser;
         CircleImageView imgUser;
         public PiadaHolder(@NonNull View itemView) {
             super(itemView);
             descricao = itemView.findViewById(R.id.text_descricao);     nomeUser = itemView.findViewById(R.id.text_nomeUser);            txtDataPost = itemView.findViewById(R.id.text_dataPost);
             imgUser = itemView.findViewById(R.id.fotoUser);             qtdLike = itemView.findViewById(R.id.txtLike);                   btnDlike = itemView.findViewById(R.id.btnDeslike);
             btnMenu = (Button) itemView.findViewById(R.id.btnMenu);     btnShere = itemView.findViewById(R.id.btnShare);                 qtdDslike = itemView.findViewById(R.id.txtDsLike);
+            btnMenuUser = (Button) itemView.findViewById(R.id.btnMenuUser);
         }
     }
 

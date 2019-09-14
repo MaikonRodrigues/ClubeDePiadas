@@ -159,7 +159,7 @@ public class ShowUsersActivity extends AppCompatActivity {
 
 
                             recyclerView.setAdapter(piadaAdapter);
-                            progresso.hide();
+
 
                         }catch (Exception erro){
                             progresso.hide();
@@ -167,6 +167,7 @@ public class ShowUsersActivity extends AppCompatActivity {
                         }
                     }
                 });
+        progresso.hide();
 
     }
 }
