@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
             user.setemail(prefs.getString("email", "sem nome"));
             user.setAvatar(prefs.getString("avatar", "1566265043.png"));
         }else{
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, ScreenSlidePagerActivity.class);
             startActivity(intent);
         }
 

@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ShowUsersActivity"></activity>
+        <activity android:name=".ScreenSlidePagerActivity"></activity>
+        <activity android:name=".ShowUsersActivity" />
         <activity android:name=".ListarUserActivity" />
         <activity android:name=".SettingsUserActivity" />
         <activity android:name=".LoginActivity" />
