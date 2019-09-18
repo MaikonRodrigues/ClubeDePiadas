@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity
 
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas")
+                .load("http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/piadas")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity
 
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/categorias")
+                .load("http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/categorias")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity
 
         Ion.with(MainActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
-                .load("POST", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas")
+                .load("POST", "http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/piadas")
                 .setBodyParameter("descricao_app", descricao)
                 .setBodyParameter("user_id_app", user.getId())
                 .setBodyParameter("categoria_app", ""+piada.getCategoria_id())
@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity
     private  void getUser(  final String id, final ImageView imageView) {
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/user/"+id)
+                .load("http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/user/"+id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity
     public void getImage(User user, final ImageView imageView){
 
         Ion.with(MainActivity.this)
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
+                .load("http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
                 .asBitmap()
                 .setCallback(new FutureCallback<Bitmap>() {
                     @Override
@@ -426,7 +426,7 @@ public class MainActivity extends AppCompatActivity
 
             Ion.with(MainActivity.this)
                     //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
-                    .load("POST", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getLink")
+                    .load("POST", "http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/getLink")
                     .asString()
                     .setCallback(new FutureCallback<String>() {
                         @Override

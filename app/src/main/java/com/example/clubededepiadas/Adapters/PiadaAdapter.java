@@ -47,7 +47,8 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     List<Categoria> listCat;
     RecyclerView myrecycleView, mRecicleCat,  myrecycle;
     Categoria categoria, categoriaEdit;
-    Piada piada,  piada1;
+    Piada  piada1;
+    boolean flag = false;
     ProgressDialog progresso;
     CategoriaAdapter categoriaAdapter;
 
@@ -82,6 +83,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     public void onBindViewHolder(@NonNull final PiadaHolder holder, final int position) {
         holder.descricao.setText(listPiadas.get(position).getDescriscao());
         getUser(holder.nomeUser, holder.txtDataPost, listPiadas.get(position).getUser_id(), holder.imgUser);
+        //categoriaAdapter = new CategoriaAdapter();
 
         holder.btnShere.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +130,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                                         public void onClick(View v) {       // Clik botao categoria
                                             final Dialog dialogCat = new Dialog(context);
                                             dialogCat.setContentView(R.layout.item_recycler_categoria);
+                                            flag = true;
 
                                             //Laco para adicionar categorias
                                             listCat = new ArrayList<>();
@@ -148,8 +151,13 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                                     dialog.findViewById(R.id.btnAdicionar).setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            piada1.setCategoria_id(categoriaAdapter.getCategoria_id());
-                                            updatePiada(((EditText) dialog.findViewById(R.id.editDescricao)).getText().toString(), listPiadas.get(position).getId(), piada1);
+                                            if (flag){
+                                                piada1.setCategoria_id(categoriaAdapter.getCategoria_id());
+                                                updatePiada(((EditText) dialog.findViewById(R.id.editDescricao)).getText().toString(), listPiadas.get(position).getId(), piada1);
+                                            }else{
+                                                Toast.makeText(context, "Selecione a Categoria", Toast.LENGTH_LONG).show();
+                                            }
+
                                         }
                                     });
                                     dialog.show();

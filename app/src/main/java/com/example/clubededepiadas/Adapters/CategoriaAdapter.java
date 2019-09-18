@@ -27,7 +27,6 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
         this.context = context;
         this.dialogCat = dialogCat;
         this.dialog = dialog;
-
     }
 
     @NonNull
@@ -74,6 +73,7 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
             cardView = (CardView)itemView.findViewById(R.id.card_item_categoria);
         }
     }
+    /*
 
     public String getCategoria() {
         return categoria.getNome();
@@ -81,7 +81,7 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
 
     public void setCategoria(String nome) {
         this.categoria.setNome(nome);
-    }
+    }*/
 
     public String getCategoria_id() {
         return categoria_id;
