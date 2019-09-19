@@ -8,6 +8,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.clubededepiadas.Classes.ZoomOutPageTransformer;
 import com.example.clubededepiadas.Fragmentos.ScreenSlidePageFragment;
@@ -16,7 +18,7 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 3;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -47,26 +49,34 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
+            // Se o usuário estiver atualmente olhando para a primeira etapa, permita que o sistema lide com o
+            // Botão "voltar. Isso chama finish () nesta atividade e exibe a pilha de trás.
             super.onBackPressed();
         } else {
-            // Otherwise, select the previous step.
+            // Caso contrário, selecione a etapa anterior.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
 
     /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * Um  pager adapter simples que representa 3 objetos ScreenSlidePageFragment, em
      * sequence.
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
+
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
+            if (position == 1){
+                Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+            }else if (position == 2){
+                Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+            }
             return new ScreenSlidePageFragment();
         }
 
