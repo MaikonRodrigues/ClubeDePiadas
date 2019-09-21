@@ -43,6 +43,8 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
         mPager.setAdapter(pagerAdapter);
 
 
+
+
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
@@ -70,11 +72,11 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 1){
+            if (position == 0){
+                Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+            }else if (position == 1){
                 Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
             }else if (position == 2){
-                Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
-            }else{
                 Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
             }
             return new ScreenSlidePageFragment();
