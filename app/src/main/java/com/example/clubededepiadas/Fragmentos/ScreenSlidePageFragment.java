@@ -12,7 +12,7 @@ import com.example.clubededepiadas.R;
 
 public class ScreenSlidePageFragment extends Fragment {
     TextView txtTexto;
-    int numTela;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
@@ -20,11 +20,11 @@ public class ScreenSlidePageFragment extends Fragment {
         return rootView;
     }
 
-    public int getNumTela() {
-        return numTela;
+    public TextView getTxtTexto() {
+        return txtTexto;
     }
 
-    public void setNumTela(int numTela) {
-        this.numTela = numTela;
+    public void setTxtTexto(String txtTexto) {
+        this.txtTexto.setText(txtTexto);
     }
 }

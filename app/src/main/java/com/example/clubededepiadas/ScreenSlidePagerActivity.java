@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clubededepiadas.Classes.ZoomOutPageTransformer;
@@ -42,9 +43,6 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(pagerAdapter);
 
-
-
-
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
@@ -66,20 +64,25 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
-
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0){
-                Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+            ScreenSlidePageFragment screenSlidePageFragment = new ScreenSlidePageFragment();
+          if (position == 0){
+               // Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+              screenSlidePageFragment.setTxtTexto("Deu certo texto da tela 1");
             }else if (position == 1){
-                Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+                //Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+              screenSlidePageFragment.setTxtTexto("Deu certo texto da tela 2");
             }else if (position == 2){
-                Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+                //Toast.makeText(ScreenSlidePagerActivity.this, "Tela "+position, Toast.LENGTH_LONG).show();
+              screenSlidePageFragment.setTxtTexto("Deu certo texto da tela 3");
             }
-            return new ScreenSlidePageFragment();
+
+
+            return screenSlidePageFragment;
         }
 
         @Override
