@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ScreenSlidePagerActivity"></activity>
+        <activity android:name=".TelaApresentActivity"></activity>
         <activity android:name=".ShowUsersActivity" />
         <activity android:name=".ListarUserActivity" />
         <activity android:name=".SettingsUserActivity" />
