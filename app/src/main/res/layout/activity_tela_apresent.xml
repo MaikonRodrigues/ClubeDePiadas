@@ -6,9 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:background="@drawable/background"
-    tools:context=".TelaApresentActivity">
+    >
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slidViewPager"
@@ -17,40 +16,13 @@
         android:foregroundGravity="center"/>
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/image"
-        android:layout_width="220dp"
-        android:layout_height="201dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="95dp"
-        android:src="@mipmap/ic_riso" />
-
-    <TextView
-        android:id="@+id/txtTitulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/image"
-        android:layout_marginTop="41dp"
-        android:gravity="center"
-        android:text="Testo teste"
-        android:textColor="@color/branco"
-        android:textSize="35dp" />
-
-    <TextView
-        android:id="@+id/txtDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTitulo"
-        android:layout_marginTop="41dp"
-        android:gravity="center"
-        android:text="Testo teste"
-        android:textColor="@color/branco"
-        android:textSize="25dp" />
-
     <LinearLayout
         android:id="@+id/dotsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="224dp"
+        android:layout_alignTop="@+id/slidViewPager"
+        android:layout_marginTop="507dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
     </LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".TelaApresentActivity">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageSlid"
+        android:layout_width="335dp"
+        android:layout_height="283dp"
+        android:layout_marginTop="5dp"
+        android:src="@mipmap/ic_new_risos" />
+
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageSlid"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Testo teste"
+        android:textColor="@color/branco"
+        android:textSize="35dp" />
+
+    <TextView
+        android:id="@+id/txtDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitulo"
+        android:layout_marginTop="41dp"
+        android:gravity="center"
+        android:text="Testo teste"
+        android:textColor="@color/branco"
+        android:textSize="25dp" />
+
+</LinearLayout>
