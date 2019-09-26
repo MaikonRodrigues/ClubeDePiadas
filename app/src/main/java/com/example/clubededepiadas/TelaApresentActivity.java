@@ -71,7 +71,7 @@ public class TelaApresentActivity extends AppCompatActivity {
                 mDots[i] = new TextView(this);
                 mDots[i].setText(Html.fromHtml("&#8226;"));
                 mDots[i].setTextSize(35);
-                mDots[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+                mDots[i].setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
                 mDotsLayout.addView(mDots[i]);
             }

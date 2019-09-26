@@ -67,7 +67,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         Ion.with(CadastroActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
-                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/addUser")
+                .load("POST","http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/addUser")
                 .setBodyParameter("name", "" + user.getNome())
                 .setBodyParameter("email", "" + user.getemail())
                 .setBodyParameter("password", "" + user.getSenha())
@@ -81,11 +81,10 @@ public class CadastroActivity extends AppCompatActivity {
                                 Toast.makeText(CadastroActivity.this, "erro ao cadastrar", Toast.LENGTH_LONG).show();
                             }else {
 
-
                                 user.setId(result.get("id").getAsString());
                                 user.setNome(result.get("name").getAsString());
                                 user.setemail(result.get("email").getAsString());
-                                user.setAvatar(result.get("avatar").getAsString());
+                                user.setAvatar("default.png");
 
 
                                SharedPreferences prefs = getSharedPreferences("meu_arquivo_de_preferencias", CadastroActivity.MODE_PRIVATE );

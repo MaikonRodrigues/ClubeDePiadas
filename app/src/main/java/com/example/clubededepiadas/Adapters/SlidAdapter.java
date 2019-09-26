@@ -41,7 +41,8 @@ public class SlidAdapter extends PagerAdapter {
             "O Jokes Rankea as piadas por quantidade " +
                     "de Likes, deixando você sempre atualizado" +
                     " com as piadas mais engraçadas",
-            "Curta e compartilhe as melhores piadas " +
+            "Curta e compartilhe as " + "\n" +
+                    "melhores piadas " +
                     "nas principais redes sociais"
     };
 

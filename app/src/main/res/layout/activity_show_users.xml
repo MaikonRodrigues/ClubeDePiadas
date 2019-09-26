@@ -14,7 +14,7 @@
         android:layout_below="@+id/mLinear"
         android:layout_marginBottom="5dp"
         android:orientation="vertical"
-        android:background="@color/colorPrimaryDark">
+        android:background="@drawable/background">
 
         <LinearLayout
             android:id="@+id/mar"
@@ -50,6 +50,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:text=""
+                    android:textColor="@color/branco"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
@@ -60,7 +61,7 @@
             android:id="@+id/mRecShow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark" />
+             />
 
     </LinearLayout>
 
