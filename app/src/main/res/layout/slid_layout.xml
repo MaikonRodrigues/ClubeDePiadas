@@ -11,8 +11,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageSlid"
-        android:layout_width="335dp"
-        android:layout_height="283dp"
+        android:layout_width="332dp"
+        android:layout_height="248dp"
         android:layout_marginTop="5dp"
         android:src="@mipmap/ic_new_risos" />
 
@@ -21,7 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageSlid"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
         android:gravity="center"
         android:text="Testo teste"
         android:textColor="@color/branco"
@@ -32,7 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtTitulo"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="41dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="Testo teste"
         android:textColor="@color/branco"

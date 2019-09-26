@@ -33,13 +33,13 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/mLinear"
         android:layout_marginBottom="5dp"
-        android:background="@color/colorPrimaryDark">
+        android:background="@drawable/background">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark" />
+             />
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,8 +11,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slidViewPager"
         android:layout_width="match_parent"
-        android:layout_height="680dp"
-        android:foregroundGravity="center"/>
+        android:layout_height="559dp"
+        android:foregroundGravity="center" />
 
 
     <LinearLayout
@@ -26,5 +25,31 @@
         android:orientation="horizontal">
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnProx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="318dp"
+        android:layout_marginLeft="318dp"
+        android:layout_marginTop="604dp"
+        android:background="@android:color/transparent"
+        android:text="Proximo"
+        android:textColor="@color/branco" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="605dp"
+        android:visibility="invisible"
+        android:background="@android:color/transparent"
+        android:text="Voltar"
+        android:textColor="@color/branco" />
 
 </RelativeLayout>

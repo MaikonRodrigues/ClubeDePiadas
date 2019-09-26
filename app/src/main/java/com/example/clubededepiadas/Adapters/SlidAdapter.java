@@ -25,19 +25,24 @@ public class SlidAdapter extends PagerAdapter {
     }
 
     public int[] slidImage = {
+            R.mipmap.ic_edit_jokes,
             R.mipmap.ic_like_circle,
-            R.mipmap.ic_riso,
-            R.mipmap.ic_edit_jokes
+            R.mipmap.ic_riso
+
     };
     public String[] slidTitulos = {
-            "Edit Piadas",
+            "Crie Piadas",
             "Curta as Melhores",
-            "Se divirta Com Amigos"
+            "Se divirta com Amigos"
     };
     public String[] slidDesc = {
-            "Descrição 1",
-            "Descrição 2",
-            "Descrição 3"
+            "O Jokes permite que você crie piadas " +
+                    "listando por categorias",
+            "O Jokes Rankea as piadas por quantidade " +
+                    "de Likes, deixando você sempre atualizado" +
+                    " com as piadas mais engraçadas",
+            "Curta e compartilhe as melhores piadas " +
+                    "nas principais redes sociais"
     };
 
     @Override

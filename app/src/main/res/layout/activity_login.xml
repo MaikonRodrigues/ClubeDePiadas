@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/background"
     android:gravity="center"
     tools:context=".LoginActivity">
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/capsule"
-            android:backgroundTint="#fff"
+            android:backgroundTint="@color/colorPrimary"
             android:text="sign_in"
             android:textColor="#000000"
             android:textStyle="bold" />
@@ -67,7 +67,6 @@
             android:layout_height="match_parent"
             android:layout_marginTop="35dp"
             android:layout_marginBottom="15dp"
-            android:background="@color/colorPrimary"
             android:text="Ainda não tenho conta"
             android:textColor="#f42d2d"
             android:textSize="18dp" />
