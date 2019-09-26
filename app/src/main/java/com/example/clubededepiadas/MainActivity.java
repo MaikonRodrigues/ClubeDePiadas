@@ -310,8 +310,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-
     private  void getUser(  final String id, final ImageView imageView) {
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas

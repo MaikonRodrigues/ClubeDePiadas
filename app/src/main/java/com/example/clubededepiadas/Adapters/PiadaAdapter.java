@@ -94,7 +94,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
         holder.btnDlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDesLike(holder.qtdDslike, user, listPiadas.get(position).getId());
+                setDesLike(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId());
             }
         });
 
@@ -182,7 +182,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
             holder.btnMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setLike(holder.qtdLike, user, listPiadas.get(position).getId());
+                    setLike(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId());
                 }
             });
             holder.btnMenuUser.setVisibility(View.INVISIBLE);
@@ -250,7 +250,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
     }
 
-    private void setDesLike(final TextView qtdDslike, User user, String piada_id) {
+    private void setDesLike(final TextView qtdLike, final TextView qtdDslike, User user, String piada_id) {
         // Toast.makeText(context, "user_id:" +user.getId(), Toast.LENGTH_LONG).show();
         // Toast.makeText(context, "piada_id:" +piada_id, Toast.LENGTH_LONG).show();
 
@@ -266,6 +266,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                         try{
                             for(int i = 0; i < result.size(); i++) {
                                 JsonObject jsonObject = result.get(i).getAsJsonObject();
+                                 qtdLike.setText(jsonObject.get("curtidas").getAsString());
                                  qtdDslike.setText(jsonObject.get("deslikes").getAsString());
                                 //Toast.makeText(context, "curtiu", Toast.LENGTH_LONG).show();
                             }
@@ -276,7 +277,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                 });
     }
 
-    private void setLike(final TextView qtdLike, User user, String piada_id) {
+    private void setLike(final TextView qtdLike, final TextView qtDLike, User user, String piada_id) {
        // Toast.makeText(context, "user_id:" +user.getId(), Toast.LENGTH_LONG).show();
        // Toast.makeText(context, "piada_id:" +piada_id, Toast.LENGTH_LONG).show();
 
@@ -293,6 +294,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                             for(int i = 0; i < result.size(); i++) {
                                 JsonObject jsonObject = result.get(i).getAsJsonObject();
                                 qtdLike.setText(jsonObject.get("curtidas").getAsString());
+                                qtDLike.setText(jsonObject.get("deslikes").getAsString());
                                // Toast.makeText(context, "curtiu", Toast.LENGTH_LONG).show();
                             }
                         }catch (Exception erro){
