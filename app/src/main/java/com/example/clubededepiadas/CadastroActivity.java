@@ -103,8 +103,8 @@ public class CadastroActivity extends AppCompatActivity {
                             }
 
                         } catch (Exception erro) {
-                            Toast.makeText(CadastroActivity.this, "Erro ao criar user " + erro, Toast.LENGTH_LONG).show();
-                            nome.setText("" + erro);
+                            Toast.makeText(CadastroActivity.this, "Erro ao cadastrar " , Toast.LENGTH_LONG).show();
+
                         }
                     }
                 });

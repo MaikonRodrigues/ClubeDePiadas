@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
 
                         } catch (Exception erro) {
-                            Toast.makeText(LoginActivity.this, "Email ou senha incorretas" + erro, Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Email ou senha incorretas" , Toast.LENGTH_LONG).show();
 
                         }
                     }

@@ -300,6 +300,7 @@ public class MainActivity extends AppCompatActivity
                             if (result.equals("ok")){
                                 Toast.makeText(MainActivity.this, "Inserido com sucesso", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
                         }catch (Exception erro){
@@ -366,16 +367,18 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-            Intent it = new Intent(this, MainActivity.class);
-            startActivity(it);
+           /* Intent it = new Intent(this, MainActivity.class);
+            startActivity(it);*/
         }
     }
+
+
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Intent in = new Intent(MainActivity.this, MainActivity.class);
-        startActivity(in);
+       /* Intent in = new Intent(MainActivity.this, MainActivity.class);
+        startActivity(in);*/
     }
 
     @Override
@@ -403,10 +406,12 @@ public class MainActivity extends AppCompatActivity
             editor.commit();
 
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
         if (id == R.id.action_settingsUser) {
            Intent intent = new Intent(MainActivity.this, SettingsUserActivity.class);
+           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
 
@@ -421,10 +426,12 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             Intent intent = new Intent(MainActivity.this, SettingsUserActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             Intent intent = new Intent(MainActivity.this, ListarUserActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
 
@@ -443,7 +450,7 @@ public class MainActivity extends AppCompatActivity
                                     setLink(result);
                                 }
                             } catch (Exception erro) {
-                                Toast.makeText(MainActivity.this, "link = "+result, Toast.LENGTH_LONG).show();
+                               // Toast.makeText(MainActivity.this, "link = "+result, Toast.LENGTH_LONG).show();
 
                             }
                         }
@@ -461,6 +468,7 @@ public class MainActivity extends AppCompatActivity
             editor.commit();
 
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
 
