@@ -111,11 +111,12 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
         // Pegando valor do menu selecionado e selecionando tipo para listar
         intent = getIntent();
         data = intent.getStringExtra("keyName");
-        if(data != null){
+        /*if(data != null){
             listarPiadas(data);
         }else{
             listarPiadas("1");
-        }
+        }*/
+        listarPiadas();
 
         getUser(user.getId(), user_image);
 
@@ -225,15 +226,15 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
             public void onResponse(String response) {
                 progresso.hide();
                     Toast.makeText(SettingsUserActivity.this, "Foto Alterada com Sucesso", Toast.LENGTH_SHORT).show();
-                Intent refresh = new Intent(SettingsUserActivity.this, SettingsUserActivity.class);
-                startActivity(refresh);
+               /* Intent refresh = new Intent(SettingsUserActivity.this, SettingsUserActivity.class);
+                startActivity(refresh);*/
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(SettingsUserActivity.this, "Erro ao registrar verifique sua conexão ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsUserActivity.this, "Erro ao atualizar verifique sua conexão ", Toast.LENGTH_SHORT).show();
                 progresso.hide();
 
             }
@@ -275,7 +276,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
 
     }
 
-    public  void listarPiadas(final String categoria_A_listar) {
+    public  void listarPiadas() {
         progresso = new ProgressDialog(SettingsUserActivity.this);
         progresso.setMessage("Carregando...");
         progresso.show();

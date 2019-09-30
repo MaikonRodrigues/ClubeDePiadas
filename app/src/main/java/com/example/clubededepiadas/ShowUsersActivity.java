@@ -29,17 +29,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ShowUsersActivity extends AppCompatActivity {
 
     Intent intent;                          Piada piada;
-    String idRecebida, ip;  List<Piada> listPiada;
+    String idRecebida, ip;                  List<Piada> listPiada;
     boolean jaLogou;                        PiadaAdapter piadaAdapter;
     CircleImageView circleImageView;        RecyclerView recyclerView;
-    TextView userName;
+    TextView userName;                      User userSelecionado;
     ProgressDialog  progresso;
     
         
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        listPiada = new ArrayList<>();
+        listPiada = new ArrayList<>();  userSelecionado = new User();
 
         setContentView(R.layout.activity_show_users);
         ip =  getString(R.string.ip);
@@ -50,19 +50,23 @@ public class ShowUsersActivity extends AppCompatActivity {
         userName = (TextView)findViewById(R.id.nmUserShow);
         recyclerView = (RecyclerView) findViewById(R.id.mRecShow);
 
-
-
         // verificacao do usuario logado
         SharedPreferences prefs = getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
         jaLogou = prefs.getBoolean("estaLogado", false);
         
         if(jaLogou) {
-            getUser(idRecebida, circleImageView);
+           getUser(idRecebida, circleImageView);
         }else{
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
         
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        listarPiadas(userSelecionado.getId());
     }
 
     private  void getUser(  final String id, final ImageView imageView) {
@@ -88,7 +92,9 @@ public class ShowUsersActivity extends AppCompatActivity {
                                     getImage(user, imageView);
                                     userName.setText(user.getNome());
                                     //Toast.makeText(ShowUsersActivity.this, "enviei o id: "+user.getId(), Toast.LENGTH_LONG).show();
+
                                     listarPiadas(user.getId());
+                                    userSelecionado.setId(user.getId());
                                 }else{
                                     //  Eventualmente esse erro ocorrera varias vezes
 
@@ -155,8 +161,6 @@ public class ShowUsersActivity extends AppCompatActivity {
                                 }
 
                             }
-
-
 
                             recyclerView.setAdapter(piadaAdapter);
 

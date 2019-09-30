@@ -53,13 +53,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Piada piada, piada1;                                    RecyclerView myrecycleView, mRecicleCat,  myrecycle;
+    Piada piada, piada1;                             RecyclerView myrecycleView, mRecicleCat,  myrecycle;
     private static final int COD_SELECIONA = 10;
-    List<Piada> listPiada;      PiadaAdapter piadaAdapter;  User user;      List<Categoria> listCat, listCatMenu;
-    ProgressDialog progresso;   EditText editDesc;          boolean jaLogou;    Intent intent;      String data;
-    String categoria_a_listar, ip;          Categoria categoria, categoriaMenu;     int flagGetCat = 0;
-    TextView nav_user, nav_email;                           ImageView nav_image;
-    CategoriaAdapter categoriaAdapter;                      CategoriaAdapterMenu  categoriaAdapterMenu;
+    List<Piada> listPiada;                           PiadaAdapter piadaAdapter;                   User user;              List<Categoria> listCat, listCatMenu;
+    ProgressDialog progresso;                        EditText editDesc;                           boolean jaLogou;        Intent intent;
+    String categoria_a_listar, ip;                   Categoria categoria, categoriaMenu;          int flagGetCat = 0;     String data;
+    TextView nav_user, nav_email;                    ImageView nav_image;
+    CategoriaAdapter categoriaAdapter;               CategoriaAdapterMenu  categoriaAdapterMenu;
 
 
 
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity
             user.setAvatar(prefs.getString("avatar", "1566265043.png"));
         }else{
             Intent intent = new Intent(this, TelaApresentActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
 
@@ -367,6 +368,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            listarPiadas("1");
            /* Intent it = new Intent(this, MainActivity.class);
             startActivity(it);*/
         }
@@ -377,6 +379,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
+        listarPiadas("1");
        /* Intent in = new Intent(MainActivity.this, MainActivity.class);
         startActivity(in);*/
     }

@@ -92,6 +92,18 @@ public class ListarUserActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        progresso = new ProgressDialog(ListarUserActivity.this);
+        progresso.setMessage("Carregando...");
+        progresso.show();
+
+        getUser(user.getId());
+    }
+
     public void Pesquisar() {
         int textlength = textPesquisa.getText().length();
         userListFilter = new ArrayList<>();
@@ -134,12 +146,9 @@ public class ListarUserActivity extends AppCompatActivity {
 
                             }
 
-
-
                             listUserAdapter = new ListUserAdapter(userList,ListarUserActivity.this);
                             recyclerView.setAdapter(listUserAdapter);
                             progresso.cancel();
-
 
                         }catch (Exception erro){
                              Toast.makeText(ListarUserActivity.this, "Erro na Requisição", Toast.LENGTH_LONG).show();
