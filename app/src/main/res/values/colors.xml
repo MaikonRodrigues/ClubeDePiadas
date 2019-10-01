@@ -6,6 +6,7 @@
     <color name="branco">#FCF8FA</color>
     <color name="preto">#000000</color>
     <color name="color1">#405766</color>
+    <color name="transparent">#05405766</color>
 
     <!--
     <color name="colorPrimary">#A23DFA</color>

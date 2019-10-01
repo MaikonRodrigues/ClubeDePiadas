@@ -24,10 +24,10 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageUserSet"
-                android:layout_marginTop="25dp"
                 android:layout_width="169dp"
                 android:layout_height="150dp"
-                android:src="@mipmap/ic_launcher_round" />
+                android:layout_marginTop="25dp"
+                android:src="@color/transparent" />
 
             <Button
                 android:id="@+id/btnAddFoto"
