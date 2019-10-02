@@ -432,7 +432,22 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, ListarUserActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-        } else if (id == R.id.nav_share) {
+
+        }else if( id == R.id.nav_nova_cat) {
+
+            final Dialog dialogCat = new Dialog(MainActivity.this);
+            dialogCat.setContentView(R.layout.item_new_cat);
+
+            dialogCat.findViewById(R.id.btnAdicionarcat).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText nomeCat;
+                    nomeCat = dialogCat.findViewById(R.id.txtNomeCat);
+                }
+            });
+            dialogCat.show();
+
+        }else if (id == R.id.nav_share) {
 
 
             Ion.with(MainActivity.this)
