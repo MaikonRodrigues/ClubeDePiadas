@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class ListarUserActivity extends AppCompatActivity {
 
-    String  ip ;                          Boolean jaLogou;
+    String  ip ;                                         Boolean jaLogou;
     RecyclerView recyclerView;                           ProgressDialog progresso;
     EditText textPesquisa;                               User user;
     List<User> userList, userListFilter;
@@ -39,6 +40,10 @@ public class ListarUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         setContentView(R.layout.activity_listar_user);
         ip =  getString(R.string.ip);
         user = new User();
@@ -93,7 +98,17 @@ public class ListarUserActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+    @Override   // Botao voltar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override   // Funcao chamada quando ocorre um restart na activity
     protected void onRestart() {
         super.onRestart();
 
@@ -104,6 +119,7 @@ public class ListarUserActivity extends AppCompatActivity {
         getUser(user.getId());
     }
 
+                // Funcao responsavel pela pesquisa dos usuarios
     public void Pesquisar() {
         int textlength = textPesquisa.getText().length();
         userListFilter = new ArrayList<>();
@@ -122,6 +138,8 @@ public class ListarUserActivity extends AppCompatActivity {
             }
         }
     }
+
+                // Funcao busca o usuario pelo id e filtra na lista da activity
     private  void getUser(String id) {
         userList = new ArrayList<>();
         Ion.with(ListarUserActivity.this)
@@ -151,7 +169,7 @@ public class ListarUserActivity extends AppCompatActivity {
                             progresso.cancel();
 
                         }catch (Exception erro){
-                             Toast.makeText(ListarUserActivity.this, "Erro na Requisição", Toast.LENGTH_LONG).show();
+                           //  Toast.makeText(ListarUserActivity.this, "Erro na Requisição", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

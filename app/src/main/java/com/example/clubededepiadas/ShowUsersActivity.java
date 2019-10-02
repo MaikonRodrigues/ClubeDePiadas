@@ -1,5 +1,6 @@
 package com.example.clubededepiadas;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,7 +9,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,12 +36,16 @@ public class ShowUsersActivity extends AppCompatActivity {
     boolean jaLogou;                        PiadaAdapter piadaAdapter;
     CircleImageView circleImageView;        RecyclerView recyclerView;
     TextView userName;                      User userSelecionado;
-    ProgressDialog  progresso;
+    ProgressDialog  progresso;              Boolean btn;
     
         
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         listPiada = new ArrayList<>();  userSelecionado = new User();
 
         setContentView(R.layout.activity_show_users);
@@ -62,6 +69,17 @@ public class ShowUsersActivity extends AppCompatActivity {
         }
         
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onRestart() {
         super.onRestart();

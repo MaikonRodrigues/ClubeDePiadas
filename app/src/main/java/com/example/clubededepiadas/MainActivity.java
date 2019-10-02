@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // Pegando valor do menu selecionado e selecionando tipo para listar
         intent = getIntent();
         data = intent.getStringExtra("keyName");
@@ -410,11 +411,6 @@ public class MainActivity extends AppCompatActivity
 
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
-        if (id == R.id.action_settingsUser) {
-           Intent intent = new Intent(MainActivity.this, SettingsUserActivity.class);
-           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
 
