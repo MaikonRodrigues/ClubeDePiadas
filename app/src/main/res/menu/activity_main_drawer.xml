@@ -11,9 +11,15 @@
             android:icon="@drawable/ic_pessoa"
             android:title="Meu Perfil" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_pessoas"
-            android:title="Buscar Humorista" />
+        android:id="@+id/nav_gallery"
+        android:icon="@drawable/ic_pessoas"
+        android:title="Buscar Humorista" />
+
+        <item
+            android:id="@+id/nav_nova_cat"
+            android:icon="@android:drawable/ic_input_add"
+            android:title="Solicitar nova categoria"
+            android:iconTint="@color/branco"/>
 
     </group>
 

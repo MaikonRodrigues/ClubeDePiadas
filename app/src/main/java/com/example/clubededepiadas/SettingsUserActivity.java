@@ -141,7 +141,8 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
         });
 
     }
-    @Override
+
+    @Override   // Funcao botao voltar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -151,7 +152,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
         return super.onOptionsItemSelected(item);
     }
 
-
+                // Funcao editar nome usuario
     public void updateName(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Digite um novo nome");
