@@ -1,7 +1,7 @@
 package com.example.clubededepiadas.Classes;
 
 public class Categoria {
-    String nome, id;
+    String nome, id, estado;
 
     public Categoria() {
     }
@@ -24,5 +24,13 @@ public class Categoria {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

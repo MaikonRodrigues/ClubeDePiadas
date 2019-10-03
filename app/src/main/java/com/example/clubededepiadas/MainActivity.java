@@ -235,8 +235,9 @@ public class MainActivity extends AppCompatActivity
                                 categoria = new Categoria();
                                 categoria.setId(jsonObject.get("id").getAsString());
                                 categoria.setNome(jsonObject.get("nome").getAsString());
-
-                                listCat.add(categoria);
+                                categoria.setEstado(jsonObject.get("estado").getAsString());
+                                if (jsonObject.get("estado").getAsString().equals("1"))
+                                    listCat.add(categoria);
                             }
                             categoriaAdapter = new CategoriaAdapter(listCat, dialogCat, dialog, MainActivity.this);
                             myrecycle.setAdapter(categoriaAdapter);
@@ -266,8 +267,9 @@ public class MainActivity extends AppCompatActivity
                                 categoriaMenu = new Categoria();
                                 categoriaMenu.setId(jsonObject.get("id").getAsString());
                                 categoriaMenu.setNome(jsonObject.get("nome").getAsString());
-
-                                listCatMenu.add(categoriaMenu);
+                                categoriaMenu.setEstado(jsonObject.get("estado").getAsString());
+                                if (jsonObject.get("estado").getAsString().equals("1"))
+                                   listCatMenu.add(categoriaMenu);
                             }
                             myrecycleView = findViewById(R.id.mRecyclerView);
                             myrecycleView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -440,15 +442,13 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v) {
                     EditText nomeCat;
-                    nomeCat = dialogCat.findViewById(R.id.txtNomeCat);
-                    solicitarCat(nomeCat.getText().toString());
+                    nomeCat =  dialogCat.findViewById(R.id.editDescricaoCat);
+                    solicitarCat(nomeCat.getText().toString(),dialogCat);
                 }
             });
             dialogCat.show();
 
         }else if (id == R.id.nav_share) {
-
-
             Ion.with(MainActivity.this)
                     //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
                     .load("POST", "http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/getLink")
@@ -489,7 +489,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void solicitarCat(String nomeCat){
+    public void solicitarCat(String nomeCat, final Dialog dialogCat){
         Ion.with(MainActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
                 .load("POST", "http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/newCat")
@@ -500,8 +500,8 @@ public class MainActivity extends AppCompatActivity
                     public void onCompleted(Exception e, String result) {
                         try{
                             if (result.equals("ok")){
-                                Toast.makeText(MainActivity.this, "Solicitado com sucesso", Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(MainActivity.this, "Solicitação enviada para analise!", Toast.LENGTH_LONG).show();
+                                dialogCat.cancel();
                             }
                         }catch (Exception erro){
                             //  Toast.makeText(MainActivity.this, "Erro ao adicionar Piada", Toast.LENGTH_LONG).show();
