@@ -375,8 +375,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -443,6 +441,7 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View v) {
                     EditText nomeCat;
                     nomeCat = dialogCat.findViewById(R.id.txtNomeCat);
+                    solicitarCat(nomeCat.getText().toString());
                 }
             });
             dialogCat.show();
@@ -489,6 +488,26 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void solicitarCat(String nomeCat){
+        Ion.with(MainActivity.this)
+                //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
+                .load("POST", "http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/newCat")
+                .setBodyParameter("nomeCat", nomeCat)
+                .asString()
+                .setCallback(new FutureCallback<String>() {
+                    @Override
+                    public void onCompleted(Exception e, String result) {
+                        try{
+                            if (result.equals("ok")){
+                                Toast.makeText(MainActivity.this, "Solicitado com sucesso", Toast.LENGTH_LONG).show();
+
+                            }
+                        }catch (Exception erro){
+                            //  Toast.makeText(MainActivity.this, "Erro ao adicionar Piada", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
     public void setLink(String texto){
 
