@@ -1,6 +1,6 @@
 package com.example.clubededepiadas.Classes;
 
-public class Piada {
+public class Piada implements Comparable<Piada>{
     String descriscao,  user_id, categoria_id;
     String id, likes, dslikes;
 
@@ -61,5 +61,15 @@ public class Piada {
 
     public void setCategoria_id(String categoria_id) {
         this.categoria_id = categoria_id;
+    }
+
+    @Override
+    public int compareTo(Piada outraPiada) {
+        if (Integer.valueOf(this.likes) > Integer.valueOf(outraPiada.getLikes())){
+            return  -1;
+        }else if (Integer.valueOf(this.likes) < Integer.valueOf(outraPiada.getLikes())){
+            return 1;
+        }
+        return 0;
     }
 }

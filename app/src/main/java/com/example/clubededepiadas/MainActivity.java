@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -206,6 +207,7 @@ public class MainActivity extends AppCompatActivity
                                 }
 
                             }
+                            Collections.sort(listPiada);
                             progresso.hide();
                             piadaAdapter = new PiadaAdapter(listPiada, MainActivity.this);
                             myrecycleView.setAdapter(piadaAdapter);
@@ -218,6 +220,8 @@ public class MainActivity extends AppCompatActivity
                 });
 
     }
+
+
 
     private  void listarCategorias(final Dialog dialogCat,final Dialog dialog) {
 
@@ -446,6 +450,12 @@ public class MainActivity extends AppCompatActivity
                     solicitarCat(nomeCat.getText().toString(),dialogCat);
                 }
             });
+            dialogCat.findViewById(R.id.btnCancelarcat).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogCat.cancel();
+                }
+            });
             dialogCat.show();
 
         }else if (id == R.id.nav_share) {
@@ -489,6 +499,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void solicitarCat(String nomeCat, final Dialog dialogCat){
         Ion.with(MainActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
@@ -509,6 +520,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
     }
+
     public void setLink(String texto){
 
         Intent sendIntent = new Intent();
