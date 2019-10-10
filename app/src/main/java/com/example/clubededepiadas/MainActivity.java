@@ -220,9 +220,7 @@ public class MainActivity extends AppCompatActivity
                 });
 
     }
-
-
-
+    
     private  void listarCategorias(final Dialog dialogCat,final Dialog dialog) {
 
         Ion.with(MainActivity.this)
@@ -522,7 +520,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setLink(String texto){
-
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, texto);

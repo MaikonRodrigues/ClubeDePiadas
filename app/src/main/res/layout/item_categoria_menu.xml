@@ -15,6 +15,6 @@
         android:background="@drawable/capsule"
         android:backgroundTint="@color/cardview_dark_background"
         android:textColor="@color/branco"
-        android:text="Geral" />
+        android:text="" />
 
 </LinearLayout>
