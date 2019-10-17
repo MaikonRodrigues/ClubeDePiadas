@@ -144,7 +144,7 @@ public class ListarUserActivity extends AppCompatActivity {
         userList = new ArrayList<>();
         Ion.with(ListarUserActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/user/"+id)
+                .load("http://"+R.string.ipServidor+"/public/api/user/"+id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override

@@ -57,7 +57,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
         this.context = context;
         piada1 = new Piada();
 
-        ip =  context.getString(R.string.ip);
+
 
         user = new User();
         // verificacao do usuario logado
@@ -194,7 +194,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/categorias")
+                .load("http://"+R.string.ipServidor+"/public/api/categorias")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -224,7 +224,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/categorias")
+                .load("http://"+R.string.ipServidor+"/public/api/categorias")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -256,7 +256,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/deslike")
+                .load("POST","http://"+R.string.ipServidor+"/public/api/deslike")
                 .setBodyParameter("user_id", user.getId())
                 .setBodyParameter("piada_id", piada_id)
                 .asJsonArray()
@@ -283,7 +283,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/like")
+                .load("POST","http://"+R.string.ipServidor+"/public/api/like")
                 .setBodyParameter("user_id", user.getId())
                 .setBodyParameter("piada_id", piada_id)
                 .asJsonArray()
@@ -307,7 +307,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     public void getLike(final TextView qtdLike,  String piada_id){
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getLike")
+                .load("POST","http://"+R.string.ipServidor+"/public/api/getLike")
                 .setBodyParameter("piada_id", piada_id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
@@ -329,7 +329,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     public void getDesLike(final TextView qtdDesLike,  String piada_id){
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getLike")
+                .load("POST","http://"+R.string.ipServidor+"/public/api/getLike")
                 .setBodyParameter("piada_id", piada_id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
@@ -351,7 +351,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     private  void getUser(final TextView nomeUser, final TextView dataPost, final String id, final ImageView imageView) {
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/user/"+id)
+                .load("http://"+R.string.ipServidor+"/public/api/user/"+id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -388,7 +388,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     public void deletePiada(String id)  {
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
-                .load("DELETE", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/deletePiada/"+id)
+                .load("DELETE", "http://"+R.string.ipServidor+"/public/api/deletePiada/"+id)
                 .asString()
                 .setCallback(new FutureCallback<String>() {
                     @Override
@@ -409,7 +409,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     public void updatePiada(String descricao,  String id, Piada piada1){
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
-                .load("PUT", "http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas/"+id)
+                .load("PUT", "http://"+R.string.ipServidor+"/public/api/piadas/"+id)
                 .setBodyParameter("descricao_app", descricao)
                 .setBodyParameter("categoria_app", ""+piada1.getCategoria_id())
                 .asString()
@@ -432,7 +432,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     public void setCamposPiada(final EditText editDesc, final TextView categoriaId, String id){
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas/"+id)
+                .load("http://"+R.string.ipServidor+"/public/api/piadas/"+id)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -453,7 +453,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
     public void getImage(User user, final ImageView imageView){
        // Toast.makeText(context, "avatar"+user.getAvatar(), Toast.LENGTH_LONG).show();
         Ion.with(context)
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
+                .load("http://"+R.string.ipServidor+"/public/api/getImage/"+user.getAvatar())
                 .asBitmap()
                 .setCallback(new FutureCallback<Bitmap>() {
                     @Override

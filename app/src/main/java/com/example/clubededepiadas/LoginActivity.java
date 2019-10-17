@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Ion.with(LoginActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
-                .load("POST","http://"+ip+"/ApiLaravelForAndroidTeste/public/api/login")
+                .load("POST","http://"+R.string.ipServidor+"/public/api/login")
                 .setBodyParameter("email", ""+user.getemail())
                 .setBodyParameter("password", ""+user.getSenha())
                 .asJsonObject()

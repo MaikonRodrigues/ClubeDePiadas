@@ -234,7 +234,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
         progresso.show();
 
         String url1 = "http://"+ip+"/ApiLaravelForAndroidTeste/public/uplaodImage.php",
-                url = "http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/uplaodImage.php";
+                url = "http://"+R.string.ipServidor+"/public/uplaodImage.php";
 
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -298,7 +298,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
 
         Ion.with(SettingsUserActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/piadas")
+                .load("http://"+R.string.ipServidor+"/public/api/piadas")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -336,7 +336,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
     private  void getUser(  final String id, final ImageView imageView) {
         Ion.with(SettingsUserActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/user/"+id)
+                .load("http://"+R.string.ipServidor+"/public/api/user/"+id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -371,7 +371,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
     public void getImage(User user, final ImageView imageView){
 
                Ion.with(SettingsUserActivity.this)
-                .load("http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
+                .load("http://"+R.string.ipServidor+"/public/api/getImage/"+user.getAvatar())
                 .asBitmap()
                 .setCallback(new FutureCallback<Bitmap>() {
                     @Override

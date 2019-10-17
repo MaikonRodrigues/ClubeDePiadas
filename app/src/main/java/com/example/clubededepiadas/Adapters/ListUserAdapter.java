@@ -34,13 +34,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.PiadaHolder> {
     List<User> listUser; Context context; User user;
-    String STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/", ip ;
 
     public ListUserAdapter(List<User> listUser, Context context) {
         this.listUser = listUser;
         this.context = context;
 
-        ip =  context.getString(R.string.ip);
         user = new User();
         // verificacao do usuario logado
         SharedPreferences prefs = context.getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
@@ -76,7 +74,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.PiadaH
     private  void getUser(final TextView nomeUser, final TextView dataPost, final String id, final ImageView imageView) {
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/user/"+id)
+                .load("http://"+R.string.ipServidor+"/public/api/user/"+id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -111,7 +109,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.PiadaH
     public void getImage(User user, final ImageView imageView){
        // Toast.makeText(context, "avatar"+user.getAvatar(), Toast.LENGTH_LONG).show();
         Ion.with(context)
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
+                .load("http://"+R.string.ipServidor+"/public/api/getImage/"+user.getAvatar())
                 .asBitmap()
                 .setCallback(new FutureCallback<Bitmap>() {
                     @Override
