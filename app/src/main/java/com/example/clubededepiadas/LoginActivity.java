@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ip =  getString(R.string.ip);
+        ip =  getString(R.string.ipServidor);
         email = (EditText) findViewById(R.id.email_login);  senha = (EditText) findViewById(R.id.password_login);
         btnLogar = (Button) findViewById(R.id.btnLogar);    naoTconta = (TextView) findViewById(R.id.btnNaotenhoConta);
         user = new User();
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Ion.with(LoginActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
-                .load("POST","http://"+R.string.ipServidor+"/public/api/login")
+                .load("POST","http://"+ip+"/public/api/login")
                 .setBodyParameter("email", ""+user.getemail())
                 .setBodyParameter("password", ""+user.getSenha())
                 .asJsonObject()

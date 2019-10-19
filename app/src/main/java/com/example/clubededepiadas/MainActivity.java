@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         // Pegando valor do menu selecionado e selecionando tipo para listar
         intent = getIntent();
         data = intent.getStringExtra("keyName");
-        ip =  getString(R.string.ip);
+        ip =  getString(R.string.ipServidor);
         user = new User();  piada1 = new Piada();
         // verificacao do usuario logado
         SharedPreferences prefs = getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity
 
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+R.string.ipServidor+"/public/api/piadas")
+                .load("http://"+ip+"/public/api/piadas")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity
 
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+R.string.ipServidor+"/public/api/categorias")
+                .load("http://"+ip+"/public/api/categorias")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity
 
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+R.string.ipServidor+"/public/api/categorias")
+                .load("http://"+ip+"/public/api/categorias")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity
 
         Ion.with(MainActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
-                .load("POST", "http://"+R.string.ipServidor+"/public/api/piadas")
+                .load("POST", "http://"+ip+"/public/api/piadas")
                 .setBodyParameter("descricao_app", descricao)
                 .setBodyParameter("user_id_app", user.getId())
                 .setBodyParameter("categoria_app", ""+piada.getCategoria_id())
@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity
     private  void getUser(  final String id, final ImageView imageView) {
         Ion.with(MainActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+R.string.ipServidor+"/public/api/user/"+id)
+                .load("http://"+ip+"/public/api/user/"+id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -355,7 +355,7 @@ public class MainActivity extends AppCompatActivity
     public void getImage(User user, final ImageView imageView){
 
         Ion.with(MainActivity.this)
-                .load("http://"+R.string.ipServidor+"/public/api/getImage/"+user.getAvatar())
+                .load("http://"+ip+"/public/api/getImage/"+user.getAvatar())
                 .asBitmap()
                 .setCallback(new FutureCallback<Bitmap>() {
                     @Override
@@ -459,7 +459,7 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_share) {
             Ion.with(MainActivity.this)
                     //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/
-                    .load("POST", "http://"+R.string.ipServidor+"/public/api/getLink")
+                    .load("POST", "http://"+ip+"/public/api/getLink")
                     .asString()
                     .setCallback(new FutureCallback<String>() {
                         @Override
@@ -501,7 +501,7 @@ public class MainActivity extends AppCompatActivity
     public void solicitarCat(String nomeCat, final Dialog dialogCat){
         Ion.with(MainActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
-                .load("POST", "http://"+R.string.ipServidor+"/public/api/newCat")
+                .load("POST", "http://"+ip+"/public/api/newCat")
                 .setBodyParameter("nomeCat", nomeCat)
                 .asString()
                 .setCallback(new FutureCallback<String>() {

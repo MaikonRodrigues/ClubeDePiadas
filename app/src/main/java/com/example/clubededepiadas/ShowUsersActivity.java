@@ -49,7 +49,7 @@ public class ShowUsersActivity extends AppCompatActivity {
         listPiada = new ArrayList<>();  userSelecionado = new User();
 
         setContentView(R.layout.activity_show_users);
-        ip =  getString(R.string.ip);
+        ip =  getString(R.string.ipServidor);
         intent = getIntent();
         idRecebida = intent.getStringExtra("id");
 

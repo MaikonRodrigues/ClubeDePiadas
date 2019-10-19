@@ -27,7 +27,7 @@ public class CadastroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-
+        ip =  getString(R.string.ipServidor);
         user = new User();
         nome = (EditText) findViewById(R.id.nome_cadastro);
         email = (EditText) findViewById(R.id.email_cadastro);
@@ -67,7 +67,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         Ion.with(CadastroActivity.this)
                 //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
-                .load("POST","http://"+R.string.ipServidor+"/public/api/addUser")
+                .load("POST","http://"+ip+"/public/api/addUser")
                 .setBodyParameter("name", "" + user.getNome())
                 .setBodyParameter("email", "" + user.getemail())
                 .setBodyParameter("password", "" + user.getSenha())

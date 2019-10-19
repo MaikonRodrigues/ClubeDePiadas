@@ -45,7 +45,7 @@ public class ListarUserActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         setContentView(R.layout.activity_listar_user);
-        ip =  getString(R.string.ip);
+        ip =  getString(R.string.ipServidor);
         user = new User();
         // verificacao do usuario logado
         SharedPreferences prefs = getSharedPreferences("meu_arquivo_de_preferencias", MODE_PRIVATE);
@@ -144,7 +144,7 @@ public class ListarUserActivity extends AppCompatActivity {
         userList = new ArrayList<>();
         Ion.with(ListarUserActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+R.string.ipServidor+"/public/api/user/"+id)
+                .load("http://"+ip+"/public/api/user/"+id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
