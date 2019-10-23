@@ -94,7 +94,8 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
         holder.btnDlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDesLike(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId());
+                react(holder.qtdDslike, holder.qtdDslike, user, listPiadas.get(position).getId(), "2");
+                //setDesLike(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId());
             }
         });
 
@@ -177,12 +178,13 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         }else{
             holder.btnMenu.setBackgroundResource(R.drawable.ic_like);
-            getLike(holder.qtdLike, listPiadas.get(position).getId());
-            getDesLike(holder.qtdDslike, listPiadas.get(position).getId());
+            react(holder.qtdLike, holder.qtdDslike  , user,listPiadas.get(position).getId(),"0");
+
             holder.btnMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setLike(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId());
+                    //setLike(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId());
+                    react(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId(),"1");
                 }
             });
             holder.btnMenuUser.setVisibility(View.INVISIBLE);
@@ -250,15 +252,13 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
     }
 
-    private void setDesLike(final TextView qtdLike, final TextView qtdDslike, User user, String piada_id) {
-        // Toast.makeText(context, "user_id:" +user.getId(), Toast.LENGTH_LONG).show();
-        // Toast.makeText(context, "piada_id:" +piada_id, Toast.LENGTH_LONG).show();
-
+    private void react(final TextView qtdLike, final TextView qtdDslike, User user, String piada_id, String reacao){
         Ion.with(context)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("POST","http://"+ip+"/public/api/deslike")
+                .load("POST","http://"+ip+"/public/api/newReact")
                 .setBodyParameter("user_id", user.getId())
                 .setBodyParameter("piada_id", piada_id)
+                .setBodyParameter("reacao", reacao)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -266,59 +266,10 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                         try{
                             for(int i = 0; i < result.size(); i++) {
                                 JsonObject jsonObject = result.get(i).getAsJsonObject();
-                                 qtdLike.setText(jsonObject.get("curtidas").getAsString());
-                                 qtdDslike.setText(jsonObject.get("deslikes").getAsString());
+                                qtdLike.setText(jsonObject.get("curtidas").getAsString());
+                                qtdDslike.setText(jsonObject.get("deslikes").getAsString());
                                 //Toast.makeText(context, "curtiu", Toast.LENGTH_LONG).show();
                             }
-                        }catch (Exception erro){
-                            Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
-
-    private void setLike(final TextView qtdLike, final TextView qtDLike, User user, String piada_id) {
-       // Toast.makeText(context, "user_id:" +user.getId(), Toast.LENGTH_LONG).show();
-       // Toast.makeText(context, "piada_id:" +piada_id, Toast.LENGTH_LONG).show();
-
-        Ion.with(context)
-                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("POST","http://"+ip+"/public/api/like")
-                .setBodyParameter("user_id", user.getId())
-                .setBodyParameter("piada_id", piada_id)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        try{
-                            for(int i = 0; i < result.size(); i++) {
-                                JsonObject jsonObject = result.get(i).getAsJsonObject();
-                                qtdLike.setText(jsonObject.get("curtidas").getAsString());
-                                qtDLike.setText(jsonObject.get("deslikes").getAsString());
-                               // Toast.makeText(context, "curtiu", Toast.LENGTH_LONG).show();
-                            }
-                        }catch (Exception erro){
-                            Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
-
-    public void getLike(final TextView qtdLike,  String piada_id){
-        Ion.with(context)
-                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("POST","http://"+ip+"/public/api/getLike")
-                .setBodyParameter("piada_id", piada_id)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        try{
-                            for(int i = 0; i < result.size(); i++) {
-                                JsonObject jsonObject = result.get(i).getAsJsonObject();
-                                qtdLike.setText(jsonObject.get("curtidas").getAsString());
-                            }
-
                         }catch (Exception erro){
                            // Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
                         }
@@ -326,27 +277,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                 });
     }
 
-    public void getDesLike(final TextView qtdDesLike,  String piada_id){
-        Ion.with(context)
-                //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("POST","http://"+ip+"/public/api/getLike")
-                .setBodyParameter("piada_id", piada_id)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        try{
-                            for(int i = 0; i < result.size(); i++) {
-                                JsonObject jsonObject = result.get(i).getAsJsonObject();
-                                qtdDesLike.setText(jsonObject.get("deslikes").getAsString());
-                            }
 
-                        }catch (Exception erro){
-                            // Toast.makeText(context, "Erro na Requisição "+erro, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
 
     private  void getUser(final TextView nomeUser, final TextView dataPost, final String id, final ImageView imageView) {
         Ion.with(context)

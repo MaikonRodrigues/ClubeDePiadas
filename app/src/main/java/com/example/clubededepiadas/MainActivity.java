@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        //STRINGSERVIDOR = "http://www.ellego.com.br/webservice/apiPiadas/ApiLaravelForAndroidTeste/public/api/";
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

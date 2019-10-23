@@ -233,16 +233,14 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
         progresso.setMessage("Carregando...");
         progresso.show();
 
-        String url1 = "http://"+ip+"/ApiLaravelForAndroidTeste/public/uplaodImage.php",
-                url = "http://"+ip+"/public/uplaodImage.php";
+        String  url = "http://"+ip+"/public/uplaodImage.php";
 
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progresso.hide();
                     Toast.makeText(SettingsUserActivity.this, "Foto Alterada com Sucesso", Toast.LENGTH_SHORT).show();
-               /* Intent refresh = new Intent(SettingsUserActivity.this, SettingsUserActivity.class);
-                startActivity(refresh);*/
+
             }
 
         }, new Response.ErrorListener() {
@@ -316,7 +314,6 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
                                 if (piada.getUser_id().equals(user.getId())){
                                     listPiada.add(piada);
                                 }
-
 
                             }
                             progresso.hide();
