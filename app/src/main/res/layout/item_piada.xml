@@ -146,12 +146,12 @@
                         android:textColor="@color/branco" />
 
                     <Button
-                        android:id="@+id/btnMenu"
+                        android:id="@+id/btnLike"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/ic_menu"
+                        android:background="@drawable/ic_like"
                         android:src="@drawable/ic_menu" />
 
                     <TextView

@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
                          user.setemail(email.getText().toString());
                          user.setSenha(senha.getText().toString());
 
-
                          login();
                     }
                 }

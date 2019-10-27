@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +26,6 @@ import com.example.clubededepiadas.Classes.Piada;
 import com.example.clubededepiadas.Classes.User;
 import com.example.clubededepiadas.MainActivity;
 import com.example.clubededepiadas.R;
-import com.example.clubededepiadas.SettingsUserActivity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -87,15 +84,20 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
         holder.btnShere.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {   //  Botao compartilhar piada
                 compartilharPiada(listPiadas.get(position).getDescriscao());
             }
         });
         holder.btnDlike.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                react(holder.qtdDslike, holder.qtdDslike, user, listPiadas.get(position).getId(), "2");
-                //setDesLike(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId());
+            public void onClick(View v) {   //  Botao desLike
+                react(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId(), "2");
+            }
+        });
+        holder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {   //  Botai Like
+                react(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId(), "1");
             }
         });
 
@@ -106,21 +108,24 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
             holder.btnDlike.setVisibility(View.INVISIBLE);
             holder.qtdDslike.setVisibility(View.INVISIBLE);
             holder.btnShere.setVisibility(View.INVISIBLE);
-            holder.btnMenu.setVisibility(View.INVISIBLE);
+            holder.btnLike.setVisibility(View.INVISIBLE);
 
-
+            /*
+             *  Botao btnMenuUser so aparece nas piadas do usuario logado, esse botao
+             *  apresentas as opções de editar e excluir a piada
+             */
             holder.btnMenuUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(context, holder.btnMenu);
+                    PopupMenu popup = new PopupMenu(context, holder.btnLike);
                     popup.inflate(R.menu.menu_piada);
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
-                                case R.id.action_editar:
+                                case R.id.action_editar:        // Se a opção escolhida for editar então ...
 
-                                    final Dialog dialog = new Dialog(context);
+                                    final Dialog dialog = new Dialog(context);      //  Inicia um alert dialog e seta os campos com as informações da piada
                                     dialog.setContentView(R.layout.item_insert);
                                     EditText editDesc; TextView txtCatNome;
                                     txtCatNome = (TextView)dialog.findViewById(R.id.txtCategoria_id);
@@ -128,7 +133,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
                                     dialog.findViewById(R.id.btnCategoria_id).setOnClickListener(new View.OnClickListener() {
                                         @Override
-                                        public void onClick(View v) {       // Clik botao categoria
+                                        public void onClick(View v) {       // Clik botao categoria lista as categorias
                                             final Dialog dialogCat = new Dialog(context);
                                             dialogCat.setContentView(R.layout.item_recycler_categoria);
                                             flag = true;
@@ -148,7 +153,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                                     setCamposPiada(editDesc, txtCatNome, listPiadas.get(position).getId());
 
                                     Button btn = (Button) dialog.findViewById(R.id.btnAdicionar);
-                                    btn.setText("Atualisar");
+                                    btn.setText("Atualisar");       // Muda o nome do botão para atualisar
                                     dialog.findViewById(R.id.btnAdicionar).setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -164,8 +169,7 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
                                     dialog.show();
                                     break;
 
-                                case R.id.action_deletar:
-
+                                case R.id.action_deletar:       // Se a opção for deletar então chama a função para deletar
                                     deletePiada(listPiadas.get(position).getId());
                                     break;
                             }
@@ -177,16 +181,8 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
             });
 
         }else{
-            holder.btnMenu.setBackgroundResource(R.drawable.ic_like);
-            react(holder.qtdLike, holder.qtdDslike  , user,listPiadas.get(position).getId(),"0");
-
-            holder.btnMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //setLike(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId());
-                    react(holder.qtdLike, holder.qtdDslike, user, listPiadas.get(position).getId(),"1");
-                }
-            });
+            //  Se entrar no else entao a piada nao e do usuario logado
+            react(holder.qtdLike, holder.qtdDslike  , user,listPiadas.get(position).getId(),"0");   //  Atualisa a quantidades de likes das piadas
             holder.btnMenuUser.setVisibility(View.INVISIBLE);
         }
 
@@ -401,13 +397,13 @@ public class PiadaAdapter extends RecyclerView.Adapter<PiadaAdapter.PiadaHolder>
 
     public class PiadaHolder extends RecyclerView.ViewHolder {
         TextView descricao, nomeUser, txtDataPost, qtdLike, qtdDslike;
-        Button btnMenu, btnDlike, btnShere,  btnMenuUser;
+        Button btnLike, btnDlike, btnShere,  btnMenuUser;
         CircleImageView imgUser;
         public PiadaHolder(@NonNull View itemView) {
             super(itemView);
             descricao = itemView.findViewById(R.id.text_descricao);     nomeUser = itemView.findViewById(R.id.text_nomeUser);            txtDataPost = itemView.findViewById(R.id.text_dataPost);
             imgUser = itemView.findViewById(R.id.fotoUser);             qtdLike = itemView.findViewById(R.id.txtLike);                   btnDlike = itemView.findViewById(R.id.btnDeslike);
-            btnMenu = (Button) itemView.findViewById(R.id.btnMenu);     btnShere = itemView.findViewById(R.id.btnShare);                 qtdDslike = itemView.findViewById(R.id.txtDsLike);
+            btnLike = (Button) itemView.findViewById(R.id.btnLike);     btnShere = itemView.findViewById(R.id.btnShare);                 qtdDslike = itemView.findViewById(R.id.txtDsLike);
             btnMenuUser = (Button) itemView.findViewById(R.id.btnMenuUser);
         }
     }
