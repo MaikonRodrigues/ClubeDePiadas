@@ -177,7 +177,7 @@ public class SettingsUserActivity extends AppCompatActivity implements Response.
 
                 Ion.with(SettingsUserActivity.this)
                         //  "http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas"
-                        .load("PUT", "http://www.ellego.com.br/webservice/ApiLaravelForAndroidTeste/public/api/updateNome")
+                        .load("PUT", "http://"+ip+"/public/api/updateNome")
                         .setBodyParameter("id", user.getId())
                         .setBodyParameter("name", input.getText().toString())
                         .asString()

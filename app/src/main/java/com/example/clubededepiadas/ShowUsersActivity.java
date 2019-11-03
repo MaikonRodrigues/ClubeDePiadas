@@ -83,14 +83,13 @@ public class ShowUsersActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-
         listarPiadas(userSelecionado.getId());
     }
 
     private  void getUser(  final String id, final ImageView imageView) {
         Ion.with(ShowUsersActivity.this)
                 //  http://192.168.1.4/ApiLaravelForAndroidTeste/public/api/piadas
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/user/"+id)
+                .load("http://"+ip+"/public/api/user/"+id)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
@@ -130,7 +129,7 @@ public class ShowUsersActivity extends AppCompatActivity {
     public void getImage(User user, final ImageView imageView){
 
         Ion.with(ShowUsersActivity.this)
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/getImage/"+user.getAvatar())
+                .load("http://"+ip+"/public/api/getImage/"+user.getAvatar())
                 .asBitmap()
                 .setCallback(new FutureCallback<Bitmap>() {
                     @Override
@@ -154,7 +153,7 @@ public class ShowUsersActivity extends AppCompatActivity {
 
 
         Ion.with(ShowUsersActivity.this)
-                .load("http://"+ip+"/ApiLaravelForAndroidTeste/public/api/piadas")
+                .load("http://"+ip+"/public/api/piadas")
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override

@@ -372,18 +372,18 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-            listarPiadas("1");
-           /* Intent it = new Intent(this, MainActivity.class);
-            startActivity(it);*/
+           // listarPiadas("1");
+            Intent it = new Intent(this, MainActivity.class);
+            startActivity(it);
         }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        listarPiadas("1");
-       /* Intent in = new Intent(MainActivity.this, MainActivity.class);
-        startActivity(in);*/
+       // listarPiadas("1");
+        Intent in = new Intent(MainActivity.this, MainActivity.class);
+        startActivity(in);
     }
 
     @Override
