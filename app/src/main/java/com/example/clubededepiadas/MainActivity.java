@@ -61,9 +61,7 @@ public class MainActivity extends AppCompatActivity
     String categoria_a_listar, ip;                   Categoria categoria, categoriaMenu;          int flagGetCat = 0;     String data;
     TextView nav_user, nav_email;                    ImageView nav_image;
     CategoriaAdapter categoriaAdapter;               CategoriaAdapterMenu  categoriaAdapterMenu;
-
-
-
+ 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
